@@ -6,4 +6,8 @@
         select * from user
     </select>
 
+    <insert id="createUser" useGeneratedKeys="true">
+        insert into user (id,pw,email,name) values (#{id}, #{pw}, #{email}, #{name})
+    </insert>
+
 </mapper>

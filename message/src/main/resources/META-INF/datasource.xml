@@ -33,7 +33,7 @@
 
     <list>
 
-        <value>classpath:mapper/userMapper.xml</value>
+        <value>classpath:mapper/*Mapper.xml</value>
 
     </list>
 
