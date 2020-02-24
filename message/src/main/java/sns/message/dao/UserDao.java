@@ -4,6 +4,7 @@ import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @UserRepository
 public interface UserDao {
@@ -12,4 +13,6 @@ public interface UserDao {
 
     public ProfileDto retrieveUserProfile(String user_id);
     public void createUserProfile(String user_id);
+
+    public UserDto findById(String id);
 }
