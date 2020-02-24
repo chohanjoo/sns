@@ -6,6 +6,10 @@
         select * from user
     </select>
 
+    <select id="retrieveUserByUserId" resultType="sns.message.dto.UserDto" parameterType="java.lang.String">
+        select * from user where id = #{user_id}
+    </select>
+
     <insert id="createUser" useGeneratedKeys="true">
         insert into user (id,pw,email,name) values (#{id}, #{pw}, #{email}, #{name})
     </insert>

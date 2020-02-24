@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
 import sns.message.request.CreateUserRequest;
@@ -39,5 +40,16 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public ProfileDto retrieveUserProfile(String user_id){
         return this.userService.retrieveUserProfile(user_id);
+    }
+
+    @RequestMapping("/login")
+    public ModelAndView login(@RequestParam(value="error", required=false)String error) {
+        ModelAndView mav = new ModelAndView("index");
+
+        if(null != error) {
+            mav.addObject("msg", "로그인 실패");
+        }
+
+        return mav;
     }
 }
