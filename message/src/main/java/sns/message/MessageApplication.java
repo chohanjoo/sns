@@ -14,4 +14,5 @@ public class MessageApplication {
 		SpringApplication.run(MessageApplication.class, args);
 	}
 
+
 }

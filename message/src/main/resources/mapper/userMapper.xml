@@ -6,8 +6,33 @@
         select * from user
     </select>
 
+    <select id="retrieveUserById" resultType="sns.message.dto.UserDto">
+        select * from user where id = #{user_id}
+    </select>
+
     <insert id="createUser" useGeneratedKeys="true">
-        insert into user (id,pw,email,name) values (#{id}, #{pw}, #{email}, #{name})
+        insert into user (id,pw,email,name, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) values (#{id}, #{pw}, #{email}, #{name}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
     </insert>
+
+    <delete id="deleteUser" parameterType="String">
+        delete from user where id = #{user_id}
+    </delete>
+
+    <select id="retrieveAuthority" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
+        select authority_name from authority where user_id = #{user_id}
+    </select>
+
+    <insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
+        insert into authority (user_id, authority_name)
+        values
+        <foreach collection="authorities" item="authority" index="index" separator=",">
+            (#{id}, #{authority, typeHandler=sns.message.config.AuthorityTypeHandler})
+        </foreach>
+    </insert>
+
+
+    <delete id="deleteAuthority" parameterType="String">
+        delete from authority where user_id = #{user_id}
+    </delete>
 
 </mapper>
