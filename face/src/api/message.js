@@ -2,20 +2,21 @@ const url = "http://localhost:8080/"
 
 export function signIn(id,password){
     const body = {
-        id : id,
-        pw : password
-    }
+        username : id,
+        password : password
+    };
 
-    return post(body);
+    return post("user/login",body);
 }
 export function get() {
     return fetch(url + 'post/')
 }
 
-export function post(_body) {
-    return fetch(url +'login/', {
+export function post(path,body) {
+    console.log(url+path);
+    return fetch(url + path, {
         method: 'POST',
-        body: JSON.stringify(_body),
+        body: JSON.stringify(body),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

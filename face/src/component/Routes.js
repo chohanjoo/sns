@@ -8,6 +8,6 @@ import SignIn from './SignIn';
 export default () => (
   <Router>
     <Route path="/post" component={CardComponent} />
-    <Route path="/login" component={SignIn} />
+    <Route path="/user/login" component={SignIn} />
   </Router>
 )

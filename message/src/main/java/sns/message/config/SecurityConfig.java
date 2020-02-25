@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 //import org.springframework.session.web.http.HeaderHttpSessionStrategy;
@@ -33,8 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post").hasAuthority("USER")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .and()
                 .logout();
     }
 
@@ -51,7 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-//    @Bean
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs","/swagger-resources/**","/swagger-ui.html","/webjars/**","/swagger/**");
+    }
+
+    //    @Bean
 //    public HttpSessionStrategy httpSessionStrategy(){
 //        return new HeaderHttpSessionStrategy();
 //    }
