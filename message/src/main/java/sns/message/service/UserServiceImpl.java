@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserDto retrieveUserById(String user_id) {
+        return this.userDao.retrieveUserById(user_id);
+    }
+
+    @Override
     public void createUser(CreateUserRequest request) {
         UserDto userDto = UserDto.create(request);
 

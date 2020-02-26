@@ -42,7 +42,7 @@ public class UserDto implements UserDetails {
 
     @Override
     public String getPassword() {
-        return pw;
+        return "{noop}"+pw;
     }
 
     @Override
