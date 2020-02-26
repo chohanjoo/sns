@@ -32,6 +32,11 @@ public class UserDto implements UserDetails {
         userDto.email = request.getEmail();
         userDto.name = request.getName();
 
+        userDto.isAccountNonExpired = true;
+        userDto.isAccountNonLocked = true;
+        userDto.isCredentialsNonExpired = true;
+        userDto.isEnabled = true;
+
         return userDto;
     }
 

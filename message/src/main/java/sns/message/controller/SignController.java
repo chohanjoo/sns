@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sns.message.config.JwtTokenProvider;
 import sns.message.dto.UserDto;
+import sns.message.request.CreateUserRequest;
 import sns.message.response.CommonResult;
 import sns.message.response.SingleResult;
 import sns.message.service.ResponseService;
@@ -45,16 +46,9 @@ public class SignController{
 
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
     @GetMapping(value = "/signup")
-    public CommonResult signin(@ApiParam(value = "회원ID : 아이디", required = true) @RequestParam String id,
-                               @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-                               @ApiParam(value = "이름", required = true) @RequestParam String name) {
+    public CommonResult signin(CreateUserRequest request) {
 
-//        CreateUserRequest request = new CreateUserRequest();
-//        request.setId(id);
-//        request.setPw(password);
-//        request.setName(name);
-//
-//        userService.createUser();
+        userService.createUser(request);
 //
 //        userJpaRepo.save(User.builder()
 //                .uid(id)
