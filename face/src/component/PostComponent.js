@@ -3,15 +3,16 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import { get } from '../api/message';
+import {get, getPostList} from '../api/message';
 
 class PostComponent extends Component {
   state = {
-    postList : []
+    postList : [],
+      token: ""
   }
 
   componentWillMount(){
-    get()
+    getPostList()
     .then(res => res.json())
     .then(data => 
       this.setState({

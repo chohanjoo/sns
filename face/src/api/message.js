@@ -1,5 +1,9 @@
 const url = "http://localhost:8080/"
 
+export function getPostList(){
+
+    return get()
+}
 export function signIn(id,password){
     const body = {
         username : id,

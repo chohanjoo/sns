@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 //import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 //import org.springframework.session.web.http.HttpSessionStrategy;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.session.web.http.HttpSessionStrategy;
 import sns.message.dao.UserDao;
 import sns.message.service.UserSecurityService;
 
@@ -55,8 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/v2/api-docs","/swagger-resources/**","/swagger-ui.html","/webjars/**","/swagger/**");
     }
 
-    //    @Bean
-//    public HttpSessionStrategy httpSessionStrategy(){
-//        return new HeaderHttpSessionStrategy();
-//    }
+    @Bean
+    public HttpSessionStrategy httpSessionStrategy(){
+        return new HeaderHttpSessionStrategy();
+    }
 }
