@@ -1,8 +1,13 @@
+import {getToken} from "./storage";
+
 const url = "http://localhost:8080/"
 
 export function getPostList(){
 
-    return get()
+    const header = {
+        'X-AUTH-TOKEN' : getToken()
+    }
+    return get(header)
 }
 export function signIn(id,password){
     const body = {
@@ -12,8 +17,10 @@ export function signIn(id,password){
 
     return post("v1/signin",body);
 }
-export function get() {
-    return fetch(url + 'post/')
+export function get(header) {
+    return fetch(url + 'post/',{
+        headers: header
+    })
 }
 
 export function post(path,body) {

@@ -17,7 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import { get } from '../api/message';
+import {get, getPostList} from '../api/message';
 
 
 const useStyles = makeStyles(theme => ({
@@ -55,10 +55,10 @@ export default function RecipeReviewCard() {
   };
 
   useEffect(() => {
-      get()
+      getPostList()
         .then(res => res.json())
         .then(data => setPostList(data))
-  })
+  });
 
   return (
     <MuiThemeProvider>

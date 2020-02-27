@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { signIn } from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
+import {login} from "../api/storage";
 
 export class SignIn extends Component{
 
@@ -26,8 +27,17 @@ export class SignIn extends Component{
     console.log(this.state.id,this.state.password);
     signIn(this.state.id,this.state.password)
         .then(response =>
-          response.json())
-        .then(json => console.log(json))
+        {
+          const result = response.status;
+          if(result === 200){
+            response.json()
+                .then(json => {
+                  login(json);
+                  console.log("success");
+                  this.props.history.push("/post");
+                })
+          }
+        })
   };
 
   handleChange = (e) => {

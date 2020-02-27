@@ -16,6 +16,9 @@ import sns.message.response.SingleResult;
 import sns.message.service.ResponseService;
 import sns.message.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Api(tags = {"1. Sign"})
 @RequiredArgsConstructor
 @RestController
@@ -33,9 +36,12 @@ public class SignController{
     public SingleResult<String> signin(@RequestBody AuthenticationRequest request) throws Exception {
 
         UserDto user = userService.retrieveUserById(request.getUsername());
+//        Map<String,Object> map = new HashMap<>();
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new Exception();
 
+//        map.put("token",responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities())));
+//        map.put("username",user);
         return responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities()));
     }
 
