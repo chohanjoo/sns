@@ -6,12 +6,10 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sns.message.config.JwtTokenProvider;
 import sns.message.dto.UserDto;
+import sns.message.request.AuthenticationRequest;
 import sns.message.request.CreateUserRequest;
 import sns.message.response.CommonResult;
 import sns.message.response.SingleResult;
@@ -24,7 +22,6 @@ import sns.message.service.UserService;
 @RequestMapping(value = "/v1")
 public class SignController{
 
-//    private final UserJpaRepo userJpaRepo;
     @Autowired
     private UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -32,13 +29,11 @@ public class SignController{
     private final PasswordEncoder passwordEncoder;
 
     @ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
-    @GetMapping(value = "/signin")
-    public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String id,
-                                       @ApiParam(value = "비밀번호", required = true) @RequestParam String password) throws Exception {
+    @PostMapping(value = "/signin")
+    public SingleResult<String> signin(@RequestBody AuthenticationRequest request) throws Exception {
 
-        UserDto user = userService.retrieveUserById(id);
-        System.out.println(password +user.getPassword());
-        if (!passwordEncoder.matches(password, user.getPassword()))
+        UserDto user = userService.retrieveUserById(request.getUsername());
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new Exception();
 
         return responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities()));
@@ -49,13 +44,7 @@ public class SignController{
     public CommonResult signin(CreateUserRequest request) {
 
         userService.createUser(request);
-//
-//        userJpaRepo.save(User.builder()
-//                .uid(id)
-//                .password(passwordEncoder.encode(password))
-//                .name(name)
-//                .roles(Collections.singletonList("ROLE_USER"))
-//                .build());
+
         return responseService.getSuccessResult();
     }
 }

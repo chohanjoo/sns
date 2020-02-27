@@ -10,7 +10,7 @@ export function signIn(id,password){
         password : password
     };
 
-    return post("user/login",body);
+    return post("v1/signin",body);
 }
 export function get() {
     return fetch(url + 'post/')
@@ -22,7 +22,7 @@ export function post(path,body) {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            'Content-Type': 'application/json'
         }
     })
 }
