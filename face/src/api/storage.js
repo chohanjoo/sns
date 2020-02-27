@@ -1,6 +1,4 @@
 export const login = (token) => {
-    // localStorage.setItem('USER', JSON.stringify(user))
-    // console.log(token['data']);
     localStorage.setItem('token', token['data'])
 };
 
@@ -11,12 +9,12 @@ export const getUser = () => {
     } catch (e) {
         return null
     }
-}
+};
 
 export const logout = () => {
     localStorage.removeItem('USER')
     localStorage.removeItem('token')
-}
+};
 
 export const getToken = () => {
     try {
@@ -25,4 +23,4 @@ export const getToken = () => {
         //이거 토큰없으므로 처리 해 주기
         return null
     }
-}
+};
