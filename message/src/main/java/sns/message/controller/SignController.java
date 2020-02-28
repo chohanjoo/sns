@@ -46,8 +46,8 @@ public class SignController{
     }
 
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
-    @GetMapping(value = "/signup")
-    public CommonResult signin(CreateUserRequest request) {
+    @PostMapping(value = "/signup")
+    public CommonResult signin(@RequestBody CreateUserRequest request) {
 
         userService.createUser(request);
 

@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -14,6 +14,9 @@ import Container from '@material-ui/core/Container';
 import {signIn} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {login} from "../api/storage";
+import {Link} from "react-router-dom";
+import Bar from "./Bar";
+import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 
 export class SignIn extends Component {
 
@@ -30,9 +33,9 @@ export class SignIn extends Component {
                 if (result === 200) {
                     response.json()
                         .then(json => {
-                            login(json);
+                            login(json,this.state.id);
                             console.log("success");
-                            this.props.history.push("/post");
+                            this.props.history.push("/");
                         })
                 }
             })
@@ -48,6 +51,7 @@ export class SignIn extends Component {
         const {classes} = this.props;
 
         return (
+            <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <div className={classes.paper}>
@@ -97,12 +101,12 @@ export class SignIn extends Component {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link to="" variant="body2">
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link to="/user/signup" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
@@ -113,12 +117,17 @@ export class SignIn extends Component {
                     <Copyright/>
                 </Box>
             </Container>
+            </ThemeProvider>
         );
     }
 
     render() {
         return (
-            this.signInForm()
+            <div>
+                <Bar/>
+                {this.signInForm()}
+            </div>
+
         );
     }
 }
@@ -127,7 +136,7 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
+            <Link to="" color="inherit" >
                 Your Website
             </Link>{' '}
             {new Date().getFullYear()}
@@ -135,6 +144,23 @@ function Copyright() {
         </Typography>
     );
 }
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: '#6fbf73',
+            main: '#4caf50',
+            dark: '#357a38',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+        },
+    },
+});
 
 const useStyles = theme => ({
     paper : {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Component, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -18,9 +18,98 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
 import {getPostList} from '../api/message';
+import withStyles from "@material-ui/core/styles/withStyles";
+import {SignIn} from "./SignIn";
+import Bar from "./Bar";
 
+class PostComponent extends Component {
+    state = {
+        expanded: false,
+        postList: []
+    };
 
-const useStyles = makeStyles(theme => ({
+    handleExpandClick = () => {
+        this.setState({
+            expanded: !this.state.expanded
+        })
+    };
+
+    componentDidMount() {
+        getPostList()
+            .then(res => res.json())
+            .then(data => this.setState({
+                postList: data
+            }))
+    }
+
+    render() {
+        const {classes} = this.props;
+        return (
+            <div>
+            <Bar/>
+            <MuiThemeProvider>
+                <Container maxWidth="sm">
+                    {this.state.postList.map((post, index) => (
+                        <Card className={classes.root} key={index}>
+                            <CardHeader
+                                avatar={
+                                    <Avatar aria-label="recipe" className={classes.avatar}>
+                                        R
+                                    </Avatar>
+                                }
+                                action={
+                                    <IconButton aria-label="settings">
+                                        <MoreVertIcon/>
+                                    </IconButton>
+                                }
+                                title={post.writer}
+                                subheader={post.update_date}
+                            />
+                            <CardMedia
+                                className={classes.media}
+                                image="/static/images/cards/paella.jpg"
+                                title={post.title}
+                            />
+                            <CardContent>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    {post.contents}
+                                </Typography>
+                            </CardContent>
+                            <CardActions disableSpacing>
+                                <IconButton aria-label="add to favorites">
+                                    <FavoriteIcon/>
+                                </IconButton>
+                                <IconButton aria-label="share">
+                                    <ShareIcon/>
+                                </IconButton>
+                                <IconButton
+                                    className={clsx(classes.expand, {
+                                        [classes.expandOpen]: this.state.expanded,
+                                    })}
+                                    onClick={this.handleExpandClick}
+                                    aria-expanded={this.state.expanded}
+                                    aria-label="show more"
+                                >
+                                    <ExpandMoreIcon/>
+                                </IconButton>
+                            </CardActions>
+                            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                                <CardContent>
+                                    <Typography paragraph>
+                                        {post.contents}
+                                    </Typography>
+                                </CardContent>
+                            </Collapse>
+                        </Card>
+                    ))}
+                </Container>
+            </MuiThemeProvider>
+            </div>
+        );
+    }
+}
+
+const useStyles = theme => ({
     root      : {
         maxWidth : 500,
         margin   : 'auto',
@@ -43,80 +132,6 @@ const useStyles = makeStyles(theme => ({
     avatar    : {
         backgroundColor: red[500],
     },
-}));
+});
 
-export default function RecipeReviewCard() {
-    const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-    const [postList, setPostList] = React.useState([]);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-    useEffect(() => {
-        getPostList()
-            .then(res => res.json())
-            .then(data => setPostList(data))
-    });
-
-    return (
-        <MuiThemeProvider>
-            <Container maxWidth="sm">
-                {postList.map((post, index) => (
-                    <Card className={classes.root} key={index}>
-                        <CardHeader
-                            avatar={
-                                <Avatar aria-label="recipe" className={classes.avatar}>
-                                    R
-                                </Avatar>
-                            }
-                            action={
-                                <IconButton aria-label="settings">
-                                    <MoreVertIcon/>
-                                </IconButton>
-                            }
-                            title={post.writer}
-                            subheader={post.update_date}
-                        />
-                        <CardMedia
-                            className={classes.media}
-                            image="/static/images/cards/paella.jpg"
-                            title={post.title}
-                        />
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {post.contents}
-                            </Typography>
-                        </CardContent>
-                        <CardActions disableSpacing>
-                            <IconButton aria-label="add to favorites">
-                                <FavoriteIcon/>
-                            </IconButton>
-                            <IconButton aria-label="share">
-                                <ShareIcon/>
-                            </IconButton>
-                            <IconButton
-                                className={clsx(classes.expand, {
-                                    [classes.expandOpen]: expanded,
-                                })}
-                                onClick={handleExpandClick}
-                                aria-expanded={expanded}
-                                aria-label="show more"
-                            >
-                                <ExpandMoreIcon/>
-                            </IconButton>
-                        </CardActions>
-                        <Collapse in={expanded} timeout="auto" unmountOnExit>
-                            <CardContent>
-                                <Typography paragraph>
-                                    {post.contents}
-                                </Typography>
-                            </CardContent>
-                        </Collapse>
-                    </Card>
-                ))}
-            </Container>
-        </MuiThemeProvider>
-    );
-}
+export default withStyles(useStyles)(PostComponent)

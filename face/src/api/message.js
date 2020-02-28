@@ -1,13 +1,18 @@
 import {getToken} from "./storage";
 
-const url = "http://localhost:8080/"
+const url = "http://localhost:8080";
 
 export function getPostList() {
     const header = {
         'X-AUTH-TOKEN': getToken()
     };
 
-    return get(header)
+    return get(header,'/post')
+}
+
+export function signUp(body) {
+
+    return post("/v1/signup", body);
 }
 
 export function signIn(id, password) {
@@ -16,11 +21,11 @@ export function signIn(id, password) {
         password: password
     };
 
-    return post("v1/signin", body);
+    return post("/v1/signin", body);
 }
 
-export function get(header) {
-    return fetch(url + 'post/', {
+export function get(header, path) {
+    return fetch(url + path, {
         headers: header
     })
 }
