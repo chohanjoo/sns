@@ -11,10 +11,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {Redirect, useHistory, withRouter} from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { createHashHistory } from "history";
-
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {browserHistory} from 'react-router-v3';
+import { createBrowserHistory } from 'history'
 
 class Bar extends Component {
 
@@ -23,7 +24,7 @@ class Bar extends Component {
         username: ""
     };
 
-    history = createHashHistory();
+    history = createBrowserHistory();
 
     componentDidMount() {
         this.setState({
@@ -50,6 +51,15 @@ class Bar extends Component {
             username: ""
         });
         this.history.push("/user/login");
+        window.location.reload();
+        // browserHistory.push("/user/login");
+    };
+
+    profileHandler = () => {
+        this.handleClose();
+        this.history.push("/user/profile");
+        window.location.reload();
+        // this.props.history.push("/user/profile");
     };
 
     render() {
@@ -78,7 +88,7 @@ class Bar extends Component {
                             open={Boolean(this.state.anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={this.profileHandler}>Profile</MenuItem>
                             <MenuItem onClick={this.handleClose}>My account</MenuItem>
                             <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
                         </Menu>

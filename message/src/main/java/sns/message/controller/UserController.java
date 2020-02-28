@@ -20,7 +20,7 @@ import sns.message.service.UserService;
 @Api(tags = {"2. User"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1")
+//@RequestMapping(value = "/v1")
 public class UserController {
 
     @Autowired

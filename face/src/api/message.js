@@ -2,6 +2,14 @@ import {getToken} from "./storage";
 
 const url = "http://localhost:8080";
 
+export function getUserList() {
+    const header = {
+        'X-AUTH-TOKEN': getToken()
+    };
+
+    return get(header,'/users')
+}
+
 export function getPostList() {
     const header = {
         'X-AUTH-TOKEN': getToken()
