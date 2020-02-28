@@ -15,6 +15,8 @@ import {signIn} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {login} from "../api/storage";
 import {Link} from "react-router-dom";
+import Bar from "./Bar";
+import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 
 export class SignIn extends Component {
 
@@ -31,9 +33,9 @@ export class SignIn extends Component {
                 if (result === 200) {
                     response.json()
                         .then(json => {
-                            login(json);
+                            login(json,this.state.id);
                             console.log("success");
-                            this.props.history.push("/post");
+                            this.props.history.push("/");
                         })
                 }
             })
@@ -49,6 +51,7 @@ export class SignIn extends Component {
         const {classes} = this.props;
 
         return (
+            <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <div className={classes.paper}>
@@ -98,7 +101,7 @@ export class SignIn extends Component {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link to="#" variant="body2">
+                                <Link to="" variant="body2">
                                     Forgot password?
                                 </Link>
                             </Grid>
@@ -114,12 +117,17 @@ export class SignIn extends Component {
                     <Copyright/>
                 </Box>
             </Container>
+            </ThemeProvider>
         );
     }
 
     render() {
         return (
-            this.signInForm()
+            <div>
+                <Bar/>
+                {this.signInForm()}
+            </div>
+
         );
     }
 }
@@ -128,7 +136,7 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" to="#">
+            <Link to="" color="inherit" >
                 Your Website
             </Link>{' '}
             {new Date().getFullYear()}
@@ -136,6 +144,23 @@ function Copyright() {
         </Typography>
     );
 }
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: '#6fbf73',
+            main: '#4caf50',
+            dark: '#357a38',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+        },
+    },
+});
 
 const useStyles = theme => ({
     paper : {

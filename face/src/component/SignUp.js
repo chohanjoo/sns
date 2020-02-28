@@ -9,11 +9,12 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {signUp} from "../api/message";
 import {Link} from "react-router-dom";
+import Bar from "./Bar";
 
 class SignUp extends Component {
     state = {
@@ -50,6 +51,7 @@ class SignUp extends Component {
         const {classes} = this.props;
 
         return (
+            <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
@@ -139,12 +141,17 @@ class SignUp extends Component {
                     <Copyright />
                 </Box>
             </Container>
+            </ThemeProvider>
         );
     }
 
     render() {
         return(
-            this.signUpForm()
+            <div>
+                <Bar/>
+                {this.signUpForm()}
+            </div>
+
         );
     }
 }
@@ -153,7 +160,7 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
+            <Link to="" color="inherit" href="https://material-ui.com/">
                 Your Website
             </Link>{' '}
             {new Date().getFullYear()}
@@ -161,6 +168,23 @@ function Copyright() {
         </Typography>
     );
 }
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: '#6fbf73',
+            main: '#4caf50',
+            dark: '#357a38',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+        },
+    },
+});
 
 const useStyles = theme => ({
     paper: {

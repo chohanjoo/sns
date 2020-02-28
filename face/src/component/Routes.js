@@ -1,13 +1,15 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import CardComponent from './PostComponent';
 import SignIn from './SignIn';
 import SignUp from "./SignUp";
+import {PrivateRoute} from "./PrivateRoute";
+import PostComponent from "./PostComponent";
+import Bar from "./Bar";
 
 export default () => (
     <Router>
-        <Route path="/post" component={CardComponent}/>
-        <Route path="/user/login" component={SignIn}/>
+        <Route path="/user/login" exact component={SignIn}/>
         <Route path="/user/signup" component={SignUp}/>
+        <PrivateRoute path='/' exact component={PostComponent} />
     </Router>
 )
