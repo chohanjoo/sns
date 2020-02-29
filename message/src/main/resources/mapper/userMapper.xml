@@ -30,6 +30,14 @@
         </foreach>
     </insert>
 
+    <select id="retrieveUserFriends" resultType="sns.message.dto.FriendDto">
+        select friend_id from friend where user_id = #{user_id}
+    </select>
+
+    <insert id="createUserFriend" useGeneratedKeys="true">
+        insert into friend (user_id,friend_id) values (#{user_id},#{friend_id})
+    </insert>
+
 
     <delete id="deleteAuthority" parameterType="String">
         delete from authority where user_id = #{user_id}

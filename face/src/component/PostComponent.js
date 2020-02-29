@@ -1,5 +1,4 @@
-import React, {Component, useEffect} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import React, {Component} from 'react';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -19,7 +18,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
 import {getPostList} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
-import {SignIn} from "./SignIn";
 import Bar from "./Bar";
 
 class PostComponent extends Component {

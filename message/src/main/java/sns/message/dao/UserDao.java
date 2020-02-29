@@ -1,8 +1,10 @@
 package sns.message.dao;
 
 import org.springframework.security.core.GrantedAuthority;
+import sns.message.dto.FriendDto;
 import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
+import sns.message.response.ListResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +22,7 @@ public interface UserDao {
     public void createUserProfile(String user_id);
 
     public List<GrantedAuthority> retrieveAuthority(String user_id);
+
+    public List<FriendDto> retrieveUserFriends(String user_id);
+    public void createUserFriend(FriendDto friendDto);
 }
