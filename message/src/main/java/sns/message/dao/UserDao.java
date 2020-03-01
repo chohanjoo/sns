@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import sns.message.dto.FriendDto;
 import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
+import sns.message.request.DeleteFriendRequest;
 import sns.message.response.ListResult;
 
 import java.util.List;
@@ -24,5 +25,7 @@ public interface UserDao {
     public List<GrantedAuthority> retrieveAuthority(String user_id);
 
     public List<FriendDto> retrieveUserFriends(String user_id);
+    public FriendDto retrieveFriend(String user_id, String friend_id);
     public void createUserFriend(FriendDto friendDto);
+    public void deleteUserFriend(DeleteFriendRequest request);
 }

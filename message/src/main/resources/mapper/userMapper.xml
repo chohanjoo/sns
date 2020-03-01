@@ -34,10 +34,17 @@
         select friend_id from friend where user_id = #{user_id}
     </select>
 
+    <select id="retrieveFriend" resultType="sns.message.dto.FriendDto">
+        select * from friend where user_id = #{user_id} and friend_id = #{friend_id}
+    </select>
+
     <insert id="createUserFriend" useGeneratedKeys="true">
         insert into friend (user_id,friend_id) values (#{user_id},#{friend_id})
     </insert>
 
+    <delete id="deleteUserFriend" parameterType="sns.message.request.DeleteFriendRequest">
+        delete from friend where user_id = #{user_id} and friend_id = #{friend_id}
+    </delete>
 
     <delete id="deleteAuthority" parameterType="String">
         delete from authority where user_id = #{user_id}

@@ -12,6 +12,7 @@ import sns.message.dto.FriendDto;
 import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
 import sns.message.request.CreateFriendRequest;
+import sns.message.request.DeleteFriendRequest;
 import sns.message.response.ListResult;
 import sns.message.service.ResponseService;
 import sns.message.service.UserService;
@@ -56,6 +57,14 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public void createUserFriend(@RequestBody CreateFriendRequest request){
         userService.createUserFriend(request);
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "회원 친구 삭제하기")
+    @DeleteMapping("/user/friend")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void createUserFriend(@RequestBody DeleteFriendRequest request){
+        userService.deleteUserFriend(request);
     }
 
 //    @ApiImplicitParams({

@@ -10,6 +10,7 @@ import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
 import sns.message.request.CreateFriendRequest;
 import sns.message.request.CreateUserRequest;
+import sns.message.request.DeleteFriendRequest;
 import sns.message.response.ListResult;
 
 import java.util.List;
@@ -61,5 +62,10 @@ public class UserServiceImpl implements UserService{
         FriendDto friendDto = FriendDto.create(request);
 
         userDao.createUserFriend(friendDto);
+    }
+
+    @Override
+    public void deleteUserFriend(DeleteFriendRequest request) {
+        userDao.deleteUserFriend(request);
     }
 }

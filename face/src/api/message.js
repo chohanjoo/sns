@@ -2,6 +2,15 @@ import {getToken, getUser} from "./storage";
 
 const url = "http://localhost:8080";
 
+export function deleteFriend(friend_id) {
+    const body = {
+        user_id: getUser(),
+        friend_id: friend_id
+    };
+
+    return deleteMethod("/user/friend", body, postHeaderInclToken)
+}
+
 export function createFriend(friend_id) {
     const body = {
         user_id: getUser(),
@@ -10,6 +19,7 @@ export function createFriend(friend_id) {
 
     return post("/user/friend", body, postHeaderInclToken)
 }
+
 export function getUserFriendList() {
     const path = '/user/friend' + '?user_id='+ getUser();
 
@@ -34,7 +44,7 @@ export function signIn(id, password) {
         password: password
     };
 
-    return post("/v1/signin", body);
+    return post("/v1/signin", body,postHeaderExclToken);
 }
 
 function get(path,header) {
@@ -47,6 +57,15 @@ function post(path, body,header) {
     console.log(url + path);
     return fetch(url + path, {
         method : 'POST',
+        body   : JSON.stringify(body),
+        headers: header
+    })
+}
+
+function deleteMethod(path, body,header) {
+    console.log(url + path);
+    return fetch(url + path, {
+        method : 'DELETE',
         body   : JSON.stringify(body),
         headers: header
     })

@@ -14,13 +14,30 @@ import Bar from "./Bar";
 import Button from "@material-ui/core/Button";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {createFriend, getUserFriendList, getUserList} from "../api/message";
+import {createFriend, deleteFriend, getUserFriendList, getUserList} from "../api/message";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class Profile extends Component {
+
+    constructor(props){
+        super(props);
+
+        this.snackbarHandler = this.snackbarHandler.bind(this);
+    }
+
     state = {
         secondary: false,
         userList: [],
-        userFriendList: []
+        userFriendList: [],
+        open: false,
+        message: "",
+        severity: ""
     };
 
     componentDidMount() {
@@ -62,10 +79,56 @@ class Profile extends Component {
             .then(response => {
                 const result = response.status;
                 if(result === 201){
+                    this.setState({
+                        message: "친구 추가를 완료했습니다.",
+                        severity: "success"
+                    },()=>this.snackbarHandler());
                     this.getUserFriends();
+                } else{
+                    this.setState({
+                        message: "친구 추가를 실패했습니다.",
+                        severity: "error"
+                    },()=>this.snackbarHandler());
                 }
             })
     }
+
+    deleteUserFriend(friend_id){
+        deleteFriend(friend_id)
+            .then(response => {
+                const result = response.status;
+                console.log(result);
+                if(result === 200){
+                    this.setState({
+                        message: "친구 삭제를 완료했습니다.",
+                        severity: "success"
+                    },()=>this.snackbarHandler());
+                    this.getUserFriends();
+                }else{
+                    this.setState({
+                        message: "친구 삭를 실패했습니다.",
+                        severity: "error"
+                    },()=>this.snackbarHandler());
+                }
+            })
+    }
+
+    snackbarHandler(){
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
+    snackbar(){
+        return(
+            <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.snackbarHandler}>
+                <Alert onClose={this.snackbarHandler} severity={this.state.severity}>
+                    {this.state.message}
+                </Alert>
+            </Snackbar>
+        );
+    }
+
 
     render() {
         const {classes} = this.props;
@@ -73,6 +136,7 @@ class Profile extends Component {
         return(
             <div>
                 <Bar/>
+                {this.snackbar()}
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="md">
                         <div className={classes.root}>
@@ -95,7 +159,7 @@ class Profile extends Component {
                                                         secondary={this.state.secondary ? 'Secondary text' : null}
                                                     />
                                                     <ListItemSecondaryAction>
-                                                        <Button variant="contained" color={"secondary"}>삭제</Button>
+                                                        <Button onClick={() => this.deleteUserFriend(user.friend_id)} variant="contained" color={"secondary"}>삭제</Button>
                                                     </ListItemSecondaryAction>
                                                 </ListItem>
                                             ))}
