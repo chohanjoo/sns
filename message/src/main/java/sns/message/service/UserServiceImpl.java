@@ -5,9 +5,13 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sns.message.dao.UserDao;
+import sns.message.dto.FriendDto;
 import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
+import sns.message.request.CreateFriendRequest;
 import sns.message.request.CreateUserRequest;
+import sns.message.request.DeleteFriendRequest;
+import sns.message.response.ListResult;
 
 import java.util.List;
 
@@ -45,5 +49,28 @@ public class UserServiceImpl implements UserService{
     @Override
     public ProfileDto retrieveUserProfile(String user_id) {
         return this.userDao.retrieveUserProfile(user_id);
+    }
+
+
+    @Override
+    public List<FriendDto> retrieveUserFriends(String user_id) {
+        return this.userDao.retrieveUserFriends(user_id);
+    }
+
+    @Override
+    public List<UserDto> retrieveRecommendFriends(String user_id) {
+        return this.userDao.retrieveRecommendFriends(user_id);
+    }
+
+    @Override
+    public void createUserFriend(CreateFriendRequest request) {
+        FriendDto friendDto = FriendDto.create(request);
+
+        userDao.createUserFriend(friendDto);
+    }
+
+    @Override
+    public void deleteUserFriend(DeleteFriendRequest request) {
+        userDao.deleteUserFriend(request);
     }
 }

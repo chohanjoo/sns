@@ -4,12 +4,13 @@ import SignIn from './SignIn';
 import SignUp from "./SignUp";
 import {PrivateRoute} from "./PrivateRoute";
 import PostComponent from "./PostComponent";
-import Bar from "./Bar";
+import Profile from "./Profile";
 
 export default () => (
     <Router>
         <Route path="/user/login" exact component={SignIn}/>
         <Route path="/user/signup" component={SignUp}/>
+        <PrivateRoute path="/user/profile" component={Profile}/>
         <PrivateRoute path='/' exact component={PostComponent} />
     </Router>
 )

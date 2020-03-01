@@ -7,12 +7,12 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sns.message.dto.FriendDto;
 import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
+import sns.message.request.CreateFriendRequest;
+import sns.message.request.DeleteFriendRequest;
 import sns.message.response.ListResult;
 import sns.message.service.ResponseService;
 import sns.message.service.UserService;
@@ -20,7 +20,7 @@ import sns.message.service.UserService;
 @Api(tags = {"2. User"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1")
+//@RequestMapping(value = "/v1")
 public class UserController {
 
     @Autowired
@@ -35,12 +35,43 @@ public class UserController {
         return responseService.getListResult(userService.retrieveAllUser());
     }
 
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "회원 리스트 조회", notes = "친추 추천 회원을 조회한다")
+    @GetMapping(value = "/user/friend/recommend")
+    public ListResult<UserDto> retrieveRecommendFriends(@RequestParam String user_id) {
+        return responseService.getListResult(userService.retrieveRecommendFriends(user_id));
+    }
+
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-    @ApiOperation(value = "회원 프로 가져오기")
+    @ApiOperation(value = "회원 프로필 가져오기")
     @GetMapping("/user/profile")
     @ResponseStatus(value = HttpStatus.OK)
     public ProfileDto retrieveUserProfile(String user_id){
         return this.userService.retrieveUserProfile(user_id);
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "회원 친구 라스트 가져오기")
+    @GetMapping("/user/friend")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ListResult<FriendDto> retrieveUserFriends(@RequestParam String user_id){
+        return responseService.getListResult(userService.retrieveUserFriends(user_id));
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "회원 친구 추가하기")
+    @PostMapping("/user/friend")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void createUserFriend(@RequestBody CreateFriendRequest request){
+        userService.createUserFriend(request);
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "회원 친구 삭제하기")
+    @DeleteMapping("/user/friend")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteUserFriend(@RequestBody DeleteFriendRequest request){
+        userService.deleteUserFriend(request);
     }
 
 //    @ApiImplicitParams({

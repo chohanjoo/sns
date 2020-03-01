@@ -10,6 +10,13 @@
         select * from user where id = #{user_id}
     </select>
 
+    <select id="retrieveRecommendFriends" resultType="sns.message.dto.UserDto">
+        select * from user u
+        where u.id != #{user_id} and not exists (
+          select * from friend f where u.id = f.friend_id and f.user_id = #{user_id}
+        )
+    </select>
+
     <insert id="createUser" useGeneratedKeys="true">
         insert into user (id,pw,email,name, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) values (#{id}, #{pw}, #{email}, #{name}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
     </insert>
@@ -30,6 +37,21 @@
         </foreach>
     </insert>
 
+    <select id="retrieveUserFriends" resultType="sns.message.dto.FriendDto">
+        select friend_id from friend where user_id = #{user_id}
+    </select>
+
+    <select id="retrieveFriend" resultType="sns.message.dto.FriendDto">
+        select * from friend where user_id = #{user_id} and friend_id = #{friend_id}
+    </select>
+
+    <insert id="createUserFriend" useGeneratedKeys="true">
+        insert into friend (user_id,friend_id) values (#{user_id},#{friend_id})
+    </insert>
+
+    <delete id="deleteUserFriend" parameterType="sns.message.request.DeleteFriendRequest">
+        delete from friend where user_id = #{user_id} and friend_id = #{friend_id}
+    </delete>
 
     <delete id="deleteAuthority" parameterType="String">
         delete from authority where user_id = #{user_id}

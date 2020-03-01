@@ -5,16 +5,20 @@
   "dependencies": {
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.45",
+    "@material-ui/styles": "latest",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "history": "^4.10.1",
     "material-ui": "^0.20.2",
+    "notistack": "^0.9.8",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
+    "react-router-v3": "^3.2.1",
     "react-scripts": "3.4.0",
-    "recompose": "^0.30.0",
-    "@material-ui/styles": "latest"
+    "recompose": "^0.30.0"
   },
   "scripts": {
     "start": "react-scripts start",

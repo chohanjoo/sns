@@ -1,20 +1,15 @@
 import React, {Component} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import {getUser, logout} from "../api/storage";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {Redirect, useHistory, withRouter} from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { createHashHistory } from "history";
-
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import { createBrowserHistory } from 'history'
 
 class Bar extends Component {
 
@@ -23,7 +18,7 @@ class Bar extends Component {
         username: ""
     };
 
-    history = createHashHistory();
+    history = createBrowserHistory();
 
     componentDidMount() {
         this.setState({
@@ -50,6 +45,15 @@ class Bar extends Component {
             username: ""
         });
         this.history.push("/user/login");
+        window.location.reload();
+        // browserHistory.push("/user/login");
+    };
+
+    profileHandler = () => {
+        this.handleClose();
+        this.history.push("/user/profile");
+        window.location.reload();
+        // this.props.history.push("/user/profile");
     };
 
     render() {
@@ -78,7 +82,7 @@ class Bar extends Component {
                             open={Boolean(this.state.anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={this.profileHandler}>Profile</MenuItem>
                             <MenuItem onClick={this.handleClose}>My account</MenuItem>
                             <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
                         </Menu>
