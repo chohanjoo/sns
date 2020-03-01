@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<UserDto> retrieveRecommendFriends(String user_id) {
+        return this.userDao.retrieveRecommendFriends(user_id);
+    }
+
+    @Override
     public void createUserFriend(CreateFriendRequest request) {
         FriendDto friendDto = FriendDto.create(request);
 

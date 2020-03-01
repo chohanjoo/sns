@@ -35,6 +35,13 @@ public class UserController {
         return responseService.getListResult(userService.retrieveAllUser());
     }
 
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "회원 리스트 조회", notes = "친추 추천 회원을 조회한다")
+    @GetMapping(value = "/user/friend/recommend")
+    public ListResult<UserDto> retrieveRecommendFriends(@RequestParam String user_id) {
+        return responseService.getListResult(userService.retrieveRecommendFriends(user_id));
+    }
+
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
     @ApiOperation(value = "회원 프로필 가져오기")
     @GetMapping("/user/profile")
@@ -63,7 +70,7 @@ public class UserController {
     @ApiOperation(value = "회원 친구 삭제하기")
     @DeleteMapping("/user/friend")
     @ResponseStatus(value = HttpStatus.OK)
-    public void createUserFriend(@RequestBody DeleteFriendRequest request){
+    public void deleteUserFriend(@RequestBody DeleteFriendRequest request){
         userService.deleteUserFriend(request);
     }
 

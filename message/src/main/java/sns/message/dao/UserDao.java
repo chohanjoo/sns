@@ -13,6 +13,7 @@ import java.util.Optional;
 @UserRepository
 public interface UserDao {
     public List<UserDto> retrieveAllUser();
+    public List<UserDto> retrieveRecommendFriends(String user_id);
     public UserDto retrieveUserById(String user_id);
     public void createUser(UserDto userDto);
     public void createAuthority(UserDto user);

@@ -38,7 +38,7 @@ class PostComponent extends Component {
             .then(data => this.setState({
                 postList: data
             }))
-            .catch(e => window.location.reload()) // TODO token 저장 실패시 오류 처
+            .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처
     }
 
     render() {
