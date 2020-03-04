@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-public class GeneratorUser {
+public class Generator {
 
     @Autowired
     UserService userService;

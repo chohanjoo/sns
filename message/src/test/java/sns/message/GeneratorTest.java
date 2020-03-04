@@ -17,7 +17,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @WebAppConfiguration
-public class GeneratorUserTest {
+public class GeneratorTest {
     RandomNameGenerator generator = new RandomNameGenerator(0);
 
     @Autowired
