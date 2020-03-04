@@ -3,11 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="2dfe593c-a605-44a9-96d4-5da8e5672696" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../message/src/main/java/sns/message/config/GeneratorUser.java" afterDir="false" />
+<<<<<<< Updated upstream
+=======
+      <change afterPath="$PROJECT_DIR$/../message/src/main/java/sns/message/controller/GeneratorController.java" afterDir="false" />
+>>>>>>> Stashed changes
       <change afterPath="$PROJECT_DIR$/../message/src/test/java/sns/message/GeneratorUserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/message.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/storage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/storage.js" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/component/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Profile.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/component/PostComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/PostComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../message/src/main/java/sns/message/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../message/src/main/java/sns/message/config/SecurityConfig.java" afterDir="false" />
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/../message/src/main/java/sns/message/controller/SignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../message/src/main/java/sns/message/controller/SignController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../message/src/main/java/sns/message/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../message/src/main/java/sns/message/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../message/src/main/java/sns/message/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../message/src/main/java/sns/message/service/UserServiceImpl.java" afterDir="false" />

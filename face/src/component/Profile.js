@@ -14,7 +14,7 @@ import Bar from "./Bar";
 import Button from "@material-ui/core/Button";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {createFriend, deleteFriend, getRecomendFriendList, getUserFriendList, getUserList} from "../api/message";
+import {createFriend, deleteFriend, getRecommendFriendList, getUserFriendList, getUserList} from "../api/message";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,7 +50,7 @@ class Profile extends Component {
     }
 
     getRecommendFriends(){
-        getRecomendFriendList()
+        getRecommendFriendList()
             .then(response => {
                 const result = response.status;
                 if(result === 200){

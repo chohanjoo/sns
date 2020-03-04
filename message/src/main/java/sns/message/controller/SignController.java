@@ -36,12 +36,15 @@ public class SignController{
     public SingleResult<String> signin(@RequestBody AuthenticationRequest request) throws Exception {
 
         UserDto user = userService.retrieveUserById(request.getUsername());
+
+        user.setAuthorities(userService.getAuthorities(user.getId()));
 //        Map<String,Object> map = new HashMap<>();
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new Exception();
 
 //        map.put("token",responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities())));
 //        map.put("username",user);
+        System.out.println(user.getAuthorities());
         return responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities()));
     }
 
@@ -49,7 +52,7 @@ public class SignController{
     @PostMapping(value = "/signup")
     public CommonResult signin(@RequestBody CreateUserRequest request) {
 
-        userService.createUser(request);
+        userService.createAdmin(request);
 
         return responseService.getSuccessResult();
     }

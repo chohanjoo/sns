@@ -2,7 +2,7 @@ import {getToken, getUser} from "./storage";
 
 const url = "http://localhost:8080";
 
-export function getRecomendFriendList(){
+export function getRecommendFriendList(){
     const path = "/user/friend/recommend" + "?user_id=" + getUser();
 
     return get(path, getHeader)

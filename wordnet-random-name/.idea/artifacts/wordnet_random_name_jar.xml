@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wordnet-random-name:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/wordnet_random_name_jar</output-path>
+    <root id="archive" name="wordnet-random-name.jar">
+      <element id="module-output" name="wordnet-random-name" />
+    </root>
+  </artifact>
+</component>

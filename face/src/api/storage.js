@@ -1,6 +1,8 @@
 export const login = (token,user_id) => {
     sessionStorage.setItem('token', token['data']);
+    console.log(getToken());
     sessionStorage.setItem('USER', user_id);
+    console.log(getUser());
 };
 
 export const getUser = () => {
