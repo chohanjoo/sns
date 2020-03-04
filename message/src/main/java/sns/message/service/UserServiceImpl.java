@@ -85,9 +85,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void createUserFriend(CreateFriendRequest request) {
-        FriendDto friendDto = FriendDto.create(request);
+        FriendDto friendDto = userDao.retrieveFriend(request.getUser_id(),request.getFriend_id());
 
-        userDao.createUserFriend(friendDto);
+        if(friendDto == null){
+            friendDto = FriendDto.create(request);
+            userDao.createUserFriend(friendDto);
+        }
     }
 
     @Override

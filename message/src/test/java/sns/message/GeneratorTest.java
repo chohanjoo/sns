@@ -1,15 +1,23 @@
 package sns.message;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kohsuke.randname.RandomNameGenerator;
+import org.markov.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import sns.message.dao.UserDao;
+import sns.message.dto.PostDto;
+import sns.message.dto.ProfileDto;
 import sns.message.dto.UserDto;
+import sns.message.request.CreatePostRequest;
 import sns.message.request.CreateUserRequest;
+import sns.message.service.PostService;
 import sns.message.service.UserService;
 
 import java.util.List;
@@ -22,6 +30,35 @@ public class GeneratorTest {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PostService postService;
+
+    @Autowired
+    private UserDao userDao;
+
+    private UserDto user1;
+
+    private ProfileDto profileDto;
+
+    private Manager manager;
+
+    @Before
+    public void setup() {
+        profileDto = new ProfileDto();
+        profileDto.setUser_id("user1");
+
+        user1 = new UserDto();
+        user1.setId("user1");
+        user1.setPw("pass1");
+        user1.setEmail("user1@naver.com");
+        user1.setAccountNonExpired(true);
+        user1.setAccountNonLocked(true);
+        user1.setName("USER1");
+        user1.setCredentialsNonExpired(true);
+        user1.setEnabled(true);
+        user1.setAuthorities(AuthorityUtils.createAuthorityList("USER"));
+    }
 
     @Test
     public void createTenUser(){
@@ -50,5 +87,22 @@ public class GeneratorTest {
         for(UserDto user : list){
             System.out.println(user.getUsername());
         }
+    }
+
+    @Test
+    @Transactional
+    public void createPost(){
+        userDao.createUserProfile("user1");
+        userDao.createUser(user1);
+
+        manager = new Manager("res/text.txt");
+        manager.generateSentence();
+        CreatePostRequest request = new CreatePostRequest();
+        request.setWriter(user1.getId());
+        request.setLove(0);
+        request.setTitle("");
+        request.setContents(manager.getSentence());
+
+        postService.createPost(request);
     }
 }

@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*/signin", "/*/signup").permitAll() // 가입 및 인증 주소는 누구나 접근가능
                 .antMatchers("/user/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/generator").hasAuthority("ADMIN")
+                .antMatchers("/generator/**").hasAuthority("ADMIN")
                 .antMatchers("/user").hasAuthority("USER")
                 .antMatchers("/post").hasAuthority("USER")
                 .anyRequest().authenticated()
