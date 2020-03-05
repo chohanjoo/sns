@@ -67,6 +67,8 @@ public class Manager {
 	}
 	public static void main(String[] args)
 	{
-		new Manager("res/text.txt");
+		Manager manager = new Manager("res/text.txt");
+		manager.generateSentence();
+		System.out.println(manager.getSentence());
 	}
 }
