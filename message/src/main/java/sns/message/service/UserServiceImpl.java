@@ -1,6 +1,7 @@
 package sns.message.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import sns.message.request.CreateUserRequest;
 import sns.message.request.DeleteFriendRequest;
 import sns.message.response.ListResult;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -47,6 +49,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void createAdmin(CreateUserRequest request) {
+        UserDto userDto = UserDto.create(request);
+
+        userDto.setPw(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setAuthorities(AuthorityUtils.createAuthorityList("ADMIN"));
+
+        userDao.createUserProfile(request.getId());
+        userDao.createUser(userDto);
+        userDao.createAuthority(userDto);
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities(String user_id) {
+        List<GrantedAuthority> authorities = userDao.retrieveAuthority(user_id);
+
+        return authorities;
+    }
+
+    @Override
     public ProfileDto retrieveUserProfile(String user_id) {
         return this.userDao.retrieveUserProfile(user_id);
     }
@@ -64,9 +85,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void createUserFriend(CreateFriendRequest request) {
-        FriendDto friendDto = FriendDto.create(request);
+        FriendDto friendDto = userDao.retrieveFriend(request.getUser_id(),request.getFriend_id());
 
-        userDao.createUserFriend(friendDto);
+        if(friendDto == null){
+            friendDto = FriendDto.create(request);
+            userDao.createUserFriend(friendDto);
+        }
     }
 
     @Override
