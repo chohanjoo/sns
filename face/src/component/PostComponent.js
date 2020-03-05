@@ -35,10 +35,16 @@ class PostComponent extends Component {
     componentDidMount() {
         getPostList()
             .then(res => res.json())
-            .then(data => this.setState({
-                postList: data
-            }))
-            .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처
+            .then(data => {
+                // console.log("data : ",data)
+                const result = data.status;
+                if(result !== 403){
+                    this.setState({
+                        postList: data
+                    })
+                }
+            })
+            // .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처리
     }
 
     render() {
