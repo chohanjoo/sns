@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sns.message.dto.PostDto;
+import sns.message.dto.UserDto;
 import sns.message.request.CreatePostRequest;
+import sns.message.request.UserIdRequest;
 import sns.message.service.PostService;
 
 import java.util.List;
@@ -31,8 +33,17 @@ public class PostController {
     }
 
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-    @ApiOperation(value = "post 생성")
+    @ApiOperation(value = "post 가져오기")
     @PostMapping("")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<PostDto> retrieveFollowingPost(@RequestBody UserIdRequest request){
+        return this.postService.retrieveFollowingPost(request.getUser_id());
+    }
+
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "post 생성")
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.OK)
     public void createPost(CreatePostRequest request){
         postService.createPost(request);
