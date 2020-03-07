@@ -1,11 +1,13 @@
 import {getToken, getUser} from "./storage";
 
-const url = "http://localhost:8080";
+const auth_server_url = "http://localhost:8080";
+const user_server_url = "http://localhost:8081";
+const post_server__url = "http://localhost:8082";
 
 export function getRecommendFriendList(){
     const path = "/user/friend/recommend" + "?user_id=" + getUser();
 
-    return get(path, getHeader)
+    return getMethod(user_server(path), getHeader);
 }
 
 export function deleteFriend(friend_id) {
@@ -14,7 +16,7 @@ export function deleteFriend(friend_id) {
         friend_id: friend_id
     };
 
-    return deleteMethod("/user/friend", body, postHeaderInclToken)
+    return deleteMethod(user_server("/user/friend"), body, postHeaderInclToken);
 }
 
 export function createFriend(friend_id) {
@@ -23,17 +25,17 @@ export function createFriend(friend_id) {
         friend_id: friend_id
     };
 
-    return post("/user/friend", body, postHeaderInclToken)
+    return postMethod(user_server("/user/friend"), body, postHeaderInclToken);
 }
 
 export function getUserFriendList() {
     const path = '/user/friend' + '?user_id='+ getUser();
 
-    return get(path,getHeader)
+    return getMethod(user_server(path),getHeader);
 }
 
 export function getUserList() {
-    return get('/users',getHeader)
+    return getMethod(user_server('/user/all'),getHeader);
 }
 
 export function getFollowingPostList() {
@@ -41,15 +43,15 @@ export function getFollowingPostList() {
         user_id: getUser()
     };
 
-    return post('/post',body,postHeaderInclToken);
+    return postMethod(post_server('/post'),body,postHeaderInclToken);
 }
 
 export function getPostList() {
-    return get('/post',getHeader)
+    return getMethod(post_server('/post'),getHeader);
 }
 
 export function signUp(body) {
-    return post("/v1/signup", body,postHeaderExclToken);
+    return postMethod(auth_server("/auth/signup"), body,postHeaderExclToken);
 }
 
 export function signIn(id, password) {
@@ -58,27 +60,37 @@ export function signIn(id, password) {
         password: password
     };
 
-    return post("/v1/signin", body,postHeaderExclToken);
+    return postMethod(auth_server("/auth/signin"), body,postHeaderExclToken);
 }
 
-function get(path,header) {
-    return fetch(url + path, {
+function auth_server(path) {
+    return auth_server_url + path;
+}
+
+function user_server(path) {
+    return user_server_url + path;
+}
+
+function post_server(path) {
+    return post_server__url + path;
+}
+
+function getMethod(url,header) {
+    return fetch(url, {
         headers: header
     })
 }
 
-function post(path, body,header) {
-    console.log(url + path);
-    return fetch(url + path, {
+function postMethod(url, body,header) {
+    return fetch(url, {
         method : 'POST',
         body   : JSON.stringify(body),
         headers: header
     })
 }
 
-function deleteMethod(path, body,header) {
-    console.log(url + path);
-    return fetch(url + path, {
+function deleteMethod(url, body,header) {
+    return fetch(url, {
         method : 'DELETE',
         body   : JSON.stringify(body),
         headers: header

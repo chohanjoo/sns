@@ -14,10 +14,9 @@ import Bar from "./Bar";
 import Button from "@material-ui/core/Button";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {createFriend, deleteFriend, getRecommendFriendList, getUserFriendList, getUserList} from "../api/message";
+import {createFriend, deleteFriend, getRecommendFriendList, getUserFriendList} from "../api/message";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -80,7 +79,6 @@ class Profile extends Component {
     }
 
     createUserFriend(friend_id){
-        console.log(friend_id);
         createFriend(friend_id)
             .then(response => {
                 const result = response.status;
@@ -103,7 +101,6 @@ class Profile extends Component {
         deleteFriend(friend_id)
             .then(response => {
                 const result = response.status;
-                console.log(result);
                 if(result === 200){
                     this.setState({
                         message: "친구 삭제를 완료했습니다.",
