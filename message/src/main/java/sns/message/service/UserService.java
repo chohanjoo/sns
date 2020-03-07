@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface UserService {
     public List<UserDto> retrieveAllUser();
-    public List<UserDto> retrieveRecommendFriends(String user_id);
+    public List<FriendDto> retrieveRecommendFriends(String user_id);
     public void createUser(CreateUserRequest request);
     public void createAdmin(CreateUserRequest request);
     public UserDto retrieveUserById(String user_id);

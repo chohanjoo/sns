@@ -36,6 +36,14 @@ export function getUserList() {
     return get('/users',getHeader)
 }
 
+export function getFollowingPostList() {
+    const body = {
+        user_id: getUser()
+    };
+
+    return post('/post',body,postHeaderInclToken);
+}
+
 export function getPostList() {
     return get('/post',getHeader)
 }

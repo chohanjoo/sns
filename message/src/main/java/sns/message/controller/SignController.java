@@ -44,7 +44,6 @@ public class SignController{
 
 //        map.put("token",responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities())));
 //        map.put("username",user);
-        System.out.println(user.getAuthorities());
         return responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getAuthorities()));
     }
 

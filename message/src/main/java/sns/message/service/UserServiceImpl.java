@@ -14,8 +14,7 @@ import sns.message.request.CreateUserRequest;
 import sns.message.request.DeleteFriendRequest;
 import sns.message.response.ListResult;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -79,8 +78,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDto> retrieveRecommendFriends(String user_id) {
-        return this.userDao.retrieveRecommendFriends(user_id);
+    public List<FriendDto> retrieveRecommendFriends(String user_id) {
+        List<FriendDto> user_friend = userDao.retrieveUserFriends(user_id);
+        Map<String,Object> map = new HashMap<String, Object>();
+//        Random random = new Random();
+        List<FriendDto> recommendFriendList = new ArrayList<>();
+
+        map.put("user_id",user_id);
+        map.put("list",user_friend);
+
+        for(int i=0; i<user_friend.size();++i){
+//            int index = random.nextInt(user_friend.size());
+
+            map.put("friend_id",user_friend.get(i).getFriend_id());
+            List<FriendDto> friendList = userDao.retrieveRecommendFriends(map);
+
+
+            recommendFriendList.addAll(friendList);
+            map.remove("friend_id");
+        }
+        return recommendFriendList;
     }
 
     @Override

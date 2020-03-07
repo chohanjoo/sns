@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import {getPostList} from '../api/message';
+import {getFollowingPostList, getPostList} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Bar from "./Bar";
 
@@ -33,7 +33,7 @@ class PostComponent extends Component {
     };
 
     componentDidMount() {
-        getPostList()
+        getFollowingPostList()
             .then(res => res.json())
             .then(data => {
                 // console.log("data : ",data)

@@ -38,7 +38,7 @@ public class UserController {
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
     @ApiOperation(value = "회원 리스트 조회", notes = "친추 추천 회원을 조회한다")
     @GetMapping(value = "/user/friend/recommend")
-    public ListResult<UserDto> retrieveRecommendFriends(@RequestParam String user_id) {
+    public ListResult<FriendDto> retrieveRecommendFriends(@RequestParam String user_id) {
         return responseService.getListResult(userService.retrieveRecommendFriends(user_id));
     }
 
