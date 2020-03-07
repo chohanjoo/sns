@@ -148,7 +148,7 @@ class Profile extends Component {
                         <div className={classes.root}>
                             <Grid container spacing={4}>
                                 <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" className={classes.title}>
+                                    <Typography variant="h5" className={classes.title}>
                                         친구 리스트
                                     </Typography>
                                     <div className={classes.demo}>
@@ -173,7 +173,7 @@ class Profile extends Component {
                                     </div>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" className={classes.title}>
+                                    <Typography variant="h5" className={classes.title}>
                                         추천 친구 리스트
                                     </Typography>
                                     <div className={classes.demo}>
@@ -186,11 +186,11 @@ class Profile extends Component {
                                                         </Avatar>
                                                     </ListItemAvatar>
                                                     <ListItemText
-                                                        primary={user.id}
+                                                        primary={user.friend_id}
                                                         secondary={this.state.secondary ? 'Secondary text' : null}
                                                     />
                                                     <ListItemSecondaryAction>
-                                                        <Button onClick={() => this.createUserFriend(user.id)} className={classes.submit} variant="contained" color={"primary"}>친구 추가</Button>
+                                                        <Button onClick={() => this.createUserFriend(user.friend_id)} className={classes.submit} variant="contained" color={"primary"}>친구 추가</Button>
                                                         <Button variant="contained" color={"secondary"}>삭제</Button>
                                                     </ListItemSecondaryAction>
                                                 </ListItem>
@@ -210,7 +210,7 @@ class Profile extends Component {
 const useStyles = theme => ({
     root: {
         flexGrow: 1,
-        maxWidth: 752,
+        maxWidth: 952,
     },
     demo: {
         backgroundColor: theme.palette.background.paper,

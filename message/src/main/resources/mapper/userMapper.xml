@@ -10,12 +10,21 @@
         select * from user where id = #{user_id}
     </select>
 
-    <select id="retrieveRecommendFriends" resultType="sns.message.dto.UserDto">
-        select * from user u
-        where u.id != #{user_id} and not exists (
-          select * from friend f where u.id = f.friend_id and f.user_id = #{user_id}
-        )
+    <select id="retrieveRecommendFriends" parameterType="java.util.Map" resultType="sns.message.dto.FriendDto">
+        select * from friend f
+        where f.user_id = #{friend_id} and f.friend_id != #{user_id} and
+          f.friend_id not in
+          <foreach collection="list" item="friend" index="index" open="(" separator="," close=")">
+              #{friend.friend_id}
+          </foreach>
     </select>
+
+    <!--<select id="retrieveRecommendFriends" resultType="sns.message.dto.UserDto">-->
+        <!--select * from user u-->
+        <!--where u.id != #{user_id} and not exists (-->
+          <!--select * from friend f where u.id = f.friend_id and f.user_id = #{user_id}-->
+        <!--)-->
+    <!--</select>-->
 
     <insert id="createUser" useGeneratedKeys="true">
         insert into user (id,pw,email,name, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) values (#{id}, #{pw}, #{email}, #{name}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
