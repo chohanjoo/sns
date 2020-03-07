@@ -1,11 +1,25 @@
-# sns
+# MWOHAE
 Microservice SNS Project
+
+
 
 ## face
 UI project
 
-## message
+
+
+## Mwohae
 REST API Server project
+
+
+
+## 서비스 포트
+
+- `/auth` [인증] :heavy_minus_sign: localhost:8080
+- `/user` [유저정보] :heavy_minus_sign: localhost:8081
+- `/post` [뉴스피드] :heavy_minus_sign: localhost:8082
+
+
 
 ## project Plan
 
@@ -27,4 +41,6 @@ REST API Server project
 ### 3. Login 후 token 저장 실패시 오류 발생
 
 ### ~~4. Post - 최근 내 게시글 + 친구들 게시글	[feature/#7]~~
+
+### 5. 3개의 서비스에 중복되는 코드 존재 (mysql query 중복 문제 해결)
 
