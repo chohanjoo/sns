@@ -18,8 +18,15 @@ REST API Server project
 - `/auth` [인증] :heavy_minus_sign: localhost:8080
 - `/user` [유저정보] :heavy_minus_sign: localhost:8081
 - `/post` [뉴스피드] :heavy_minus_sign: localhost:8082
+- /generator [생성기] :heavy_minus_sign: localhost:8079 [Admin 계정만 접속 가능]
 
+## 실행방법
 
+- Generator
+
+  * Intellij - File - Project Structure - Libraries - (+) 을 눌러
+
+    oss/Oss External Libraries/Markov.jar 과 wordnet-random-name.jar 를 추가해준다.
 
 ## project Plan
 
