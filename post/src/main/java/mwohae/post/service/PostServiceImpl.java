@@ -7,6 +7,7 @@ import mwohae.post.dto.PostDto;
 import mwohae.post.request.CreatePostRequest;
 import mwohae.post.response.ListResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +31,9 @@ public class PostServiceImpl implements PostService {
     @Autowired
     UserDao userDao;
 
+    @Value("${server.url}")
+    String server_url;
+
     @Override
     public List<PostDto> retrieveAllPost() {
         return this.postDao.retrieveAllPost();
@@ -45,7 +49,7 @@ public class PostServiceImpl implements PostService {
 
         HttpEntity entity = new HttpEntity(headers);
 
-        ResponseEntity<ListResult<FriendDto>> response = restTemplate.exchange("http://localhost:8081/user/friend?user_id=" +user_id, HttpMethod.GET, entity,  new ParameterizedTypeReference<ListResult<FriendDto>>(){});
+        ResponseEntity<ListResult<FriendDto>> response = restTemplate.exchange(server_url + "/user/friend?user_id=" +user_id, HttpMethod.GET, entity,  new ParameterizedTypeReference<ListResult<FriendDto>>(){});
         List<FriendDto> followingUser = response.getBody().getList();
 
         List<PostDto> postList = new ArrayList<>();

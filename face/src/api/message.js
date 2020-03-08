@@ -1,8 +1,8 @@
 import {getToken, getUser} from "./storage";
 
-const auth_server_url = "http://localhost:8080";
-const user_server_url = "http://localhost:8081";
-const post_server__url = "http://localhost:8082";
+const auth_server_url = "http://localhost:8000/api";
+const user_server_url = "http://localhost:8000/api";
+const post_server__url = "http://localhost:8000/api";
 
 export function getRecommendFriendList(){
     const path = "/user/friend/recommend" + "?user_id=" + getUser();
