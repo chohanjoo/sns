@@ -30,12 +30,12 @@ public class PostController {
         return this.postService.retrieveAllPost();
     }
 
-    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+//    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
     @ApiOperation(value = "post 가져오기")
     @PostMapping("")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<PostDto> retrieveFollowingPost(@RequestBody UserIdRequest request){
-        return this.postService.retrieveFollowingPost(request.getUser_id());
+    public List<PostDto> retrieveFollowingPost(@RequestHeader("X-AUTH-TOKEN") String token, @RequestBody UserIdRequest request){
+        return this.postService.retrieveFollowingPost(token, request.getUser_id());
     }
 
 
