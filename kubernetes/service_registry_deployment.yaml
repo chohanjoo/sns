@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: service-registry
+  name: service-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-registry
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: service-registry
+    spec:
+      containers:
+      - image: chohanjoo/mwohae-service-registry:v0.1
+        name: mwohae-service-registry
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: service-registry
+  name: service-registry
+spec:
+  ports:
+  - name: 8761-8761
+    port: 8761
+    protocol: TCP
+    targetPort: 8761
+  selector:
+    app: service-registry
+  type: ClusterIP
+status:
+  loadBalancer: {}
