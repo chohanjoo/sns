@@ -3,23 +3,23 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: gateway
-  name: gateway
+    app: user
+  name: user
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway
+      app: user
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: gateway
+        app: user
     spec:
       containers:
-      - image: chohanjoo/mwohae-gateway:v0.1
-        name: mwohae-gateway
+      - image: chohanjoo/mwohae-user:v0.1.2
+        name: mwohae-user
         resources: {}
 status: {}
 ---
@@ -28,16 +28,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: gateway
-  name: gateway
+    app: user
+  name: user
 spec:
   ports:
-  - name: 8000-8000
-    port: 8000
+  - name: 8081-8081
+    port: 8081
     protocol: TCP
-    targetPort: 8000
+    targetPort: 8081
   selector:
-    app: gateway
+    app: user
   type: ClusterIP
 status:
   loadBalancer: {}

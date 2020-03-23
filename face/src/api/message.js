@@ -1,13 +1,11 @@
 import {getToken, getUser} from "./storage";
 
-const auth_server_url = "http://localhost:8000/api";
-const user_server_url = "http://localhost:8000/api";
-const post_server__url = "http://localhost:8000/api";
+const server_url = "http://localhost:8000/api";
 
 export function getRecommendFriendList(){
     const path = "/user/friend/recommend" + "?user_id=" + getUser();
 
-    return getMethod(user_server(path), getHeader);
+    return getMethod(gateway_server(path), getHeader);
 }
 
 export function deleteFriend(friend_id) {
@@ -16,7 +14,7 @@ export function deleteFriend(friend_id) {
         friend_id: friend_id
     };
 
-    return deleteMethod(user_server("/user/friend"), body, postHeaderInclToken);
+    return deleteMethod(gateway_server("/user/friend"), body, postHeaderInclToken);
 }
 
 export function createFriend(friend_id) {
@@ -25,17 +23,17 @@ export function createFriend(friend_id) {
         friend_id: friend_id
     };
 
-    return postMethod(user_server("/user/friend"), body, postHeaderInclToken);
+    return postMethod(gateway_server("/user/friend"), body, postHeaderInclToken);
 }
 
 export function getUserFriendList() {
     const path = '/user/friend' + '?user_id='+ getUser();
 
-    return getMethod(user_server(path),getHeader);
+    return getMethod(gateway_server(path),getHeader);
 }
 
 export function getUserList() {
-    return getMethod(user_server('/user/all'),getHeader);
+    return getMethod(gateway_server('/user/all'),getHeader);
 }
 
 export function getFollowingPostList() {
@@ -43,15 +41,15 @@ export function getFollowingPostList() {
         user_id: getUser()
     };
 
-    return postMethod(post_server('/post'),body,postHeaderInclToken);
+    return postMethod(gateway_server('/post'),body,postHeaderInclToken);
 }
 
 export function getPostList() {
-    return getMethod(post_server('/post'),getHeader);
+    return getMethod(gateway_server('/post'),getHeader);
 }
 
 export function signUp(body) {
-    return postMethod(auth_server("/auth/signup"), body,postHeaderExclToken);
+    return postMethod(gateway_server("/auth/signup"), body,postHeaderExclToken);
 }
 
 export function signIn(id, password) {
@@ -60,19 +58,11 @@ export function signIn(id, password) {
         password: password
     };
 
-    return postMethod(auth_server("/auth/signin"), body,postHeaderExclToken);
+    return postMethod(gateway_server("/auth/signin"), body,postHeaderExclToken);
 }
 
-function auth_server(path) {
-    return auth_server_url + path;
-}
-
-function user_server(path) {
-    return user_server_url + path;
-}
-
-function post_server(path) {
-    return post_server__url + path;
+function gateway_server(path) {
+    return server_url + path;
 }
 
 function getMethod(url,header) {
