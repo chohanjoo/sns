@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: face
+  name: face
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: face
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: face
+    spec:
+      containers:
+      - image: chohanjoo/mwohae-face:v0.1.2
+        name: mwohae-face
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: face
+  name: face
+spec:
+  ports:
+  - name: 3000-3000
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: face
+  type: ClusterIP
+status:
+  loadBalancer: {}

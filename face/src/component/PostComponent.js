@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import {getFollowingPostList, getPostList} from '../api/message';
+import {getFollowingPostList} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Bar from "./Bar";
 

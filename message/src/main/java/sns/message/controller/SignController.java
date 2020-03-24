@@ -22,7 +22,7 @@ import java.util.Map;
 @Api(tags = {"1. Sign"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/auth")
 public class SignController{
 
     @Autowired

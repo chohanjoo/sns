@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: gateway
+  name: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - image: chohanjoo/mwohae-gateway:v0.1.2
+        name: mwohae-gateway
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: gateway
+  name: gateway
+spec:
+  clusterIP: 10.101.206.206
+  ports:
+  - name: 8000-8000
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: gateway
+  type: ClusterIP
+status:
+  loadBalancer: {}

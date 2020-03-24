@@ -26,7 +26,6 @@ export class SignIn extends Component {
     };
 
     login = () => {
-        console.log(this.state.id, this.state.password);
         signIn(this.state.id, this.state.password)
             .then(response => {
                 const result = response.status;
@@ -34,7 +33,6 @@ export class SignIn extends Component {
                     response.json()
                         .then(json => {
                             login(json,this.state.id);
-                            console.log("success");
                             this.props.history.push("/");
                         })
                 }
