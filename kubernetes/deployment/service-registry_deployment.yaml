@@ -17,9 +17,13 @@ spec:
       labels:
         app: service-registry
     spec:
+      hostname: service-registry
+      subdomain: mwohae
       containers:
       - image: chohanjoo/mwohae-service-registry:v0.1.2
         name: mwohae-service-registry
+        ports:
+        - containerPort: 8761
         resources: {}
 status: {}
 ---

@@ -17,6 +17,8 @@ spec:
       labels:
         app: auth
     spec:
+      hostname: auth
+      subdomain: mwohae
       containers:
       - image: chohanjoo/mwohae-auth:v0.1.2
         name: mwohae-auth
