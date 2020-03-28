@@ -89,16 +89,6 @@ $ ./run.sh
 
 
 
-### REST API Document [Swagger]
-
-- 1> Eureka - localhost:8761
-- 2> Generator - localhost:8079/swagger-ui.html
-- 3> Auth - localhost:8080/swagger-ui.html
-- 4> User - localhost:8081/swagger-ui.html
-- 5> Post - localhost:8082/swagger-ui.html
-
-## 
-
 ### [ Live ]
 
 `Docker` 및 `Kubernetes` 가 설치되었음을 가정한다.
@@ -153,8 +143,6 @@ $ kubectl apply -f mysql-deployment.yaml
 $ kubectl get all
 ~~~
 
-![kubectl_get_all](/assets/kubectl_get_all.png)
-
 
 
 #### port forwarding
@@ -166,6 +154,16 @@ $ kubectl port-forward svc/face 3000:3000
 ~~~
 
 :heavy_dollar_sign: **localhost:3000 으로 접속한다.**
+
+
+
+### REST API Document [Swagger]
+
+- 1> Eureka - localhost:8761
+- 2> Generator - localhost:8079/swagger-ui.html
+- 3> Auth - localhost:8080/swagger-ui.html
+- 4> User - localhost:8081/swagger-ui.html
+- 5> Post - localhost:8082/swagger-ui.html
 
 
 
