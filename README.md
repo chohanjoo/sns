@@ -1,10 +1,13 @@
 # MWOHAE
+
+ [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/chohanjoo/mwohae/blob/master/LICENSE) [![Docker Images Version][npm-image]][npm-url]
+
 > **Kubernetes Microservice SNS Project**
 >
 > 쿠버네티스로 관리하는 마이크로서비스 아키텍처의 Social Networking Service이다.
 > Frontend는 `ReactJS` , Backend는 `springboot`,`mysql`,`spring cloud Netflix Oss` 를 사용하여 개발했다.
 
- [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)] (https://github.com/chohanjoo/mwohae/blob/master/LICENSE)[![Docker Images Version][npm-image]][npm-url]
+
 
 ## Project Architecture
 
