@@ -42,15 +42,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> retrieveFollowingPost(String token, String user_id) {
         RestTemplate restTemplate = new RestTemplate();
-//        List<FriendDto> followingUser = userDao.retrieveUserFriends(user_id);
+        List<FriendDto> followingUser = userDao.retrieveUserFriends(user_id);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("x-auth-token", token);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("x-auth-token", token);
+//
+//        HttpEntity entity = new HttpEntity(headers);
 
-        HttpEntity entity = new HttpEntity(headers);
-
-        ResponseEntity<ListResult<FriendDto>> response = restTemplate.exchange(server_url + "/user/friend?user_id=" +user_id, HttpMethod.GET, entity,  new ParameterizedTypeReference<ListResult<FriendDto>>(){});
-        List<FriendDto> followingUser = response.getBody().getList();
+//        ResponseEntity<ListResult<FriendDto>> response = restTemplate.exchange(server_url + "/user/friend?user_id=" +user_id, HttpMethod.GET, entity,  new ParameterizedTypeReference<ListResult<FriendDto>>(){});
+//        List<FriendDto> followingUser = response.getBody().getList();
 
         List<PostDto> postList = new ArrayList<>();
 

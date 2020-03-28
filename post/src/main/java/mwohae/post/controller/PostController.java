@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(tags = {"3. Post"})
-@CrossOrigin
 @RestController
 @RequestMapping("post")
 public class PostController {
