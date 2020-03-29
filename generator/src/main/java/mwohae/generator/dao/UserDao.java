@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.List;
 
 @UserRepository
-public interface UserDao {
+public interface    UserDao {
     public List<UserDto> retrieveAllUser();
     public UserDto retrieveUserById(String user_id);
     public void createUser(UserDto userDto);

@@ -2,7 +2,7 @@
 
 APP_NAME=$1
 PORT=$2
-VERSION='v0.1'
+VERSION=$3
 
 cd ../kubernetes
 

@@ -19,6 +19,14 @@
 		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>local-repository</id>
+			<name>local repository</name>
+			<url>file://${project.basedir}/repo</url>
+		</repository>
+	</repositories>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -126,6 +134,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.markov</groupId>
+			<artifactId>markov</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.kohsuke</groupId>
+			<artifactId>wordnet-random-name</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -6,7 +6,22 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eb6c7a9-b85b-4a57-a219-f3ef1e43809e" name="Default Changelist" comment="" />
+    <list default="true" id="6eb6c7a9-b85b-4a57-a219-f3ef1e43809e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../generator/src/main/resources/application-prod.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../generator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../generator/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../generator/src/main/java/mwohae/generator/config/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../generator/src/main/java/mwohae/generator/config/Generator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../generator/src/main/java/mwohae/generator/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../generator/src/main/java/mwohae/generator/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../generator/src/main/resources/META-INF/datasource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../generator/src/main/resources/META-INF/datasource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../generator/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../generator/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Oss_External_Libraries/Markov.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../../Oss_External_Libraries/Markov.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Markov_jar/Markov.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Markov_jar/Markov.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Markov/META-INF/Markov.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Markov/org/markov/Manager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Markov/org/markov/Manager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/markov/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/markov/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../shell_script/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../../shell_script/deploy.sh" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/text.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+            <state relative-caret-position="75">
+              <caret line="5" column="74" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="74" />
             </state>
           </provider>
         </entry>
@@ -52,12 +67,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/markov/Manager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="618">
-              <caret line="62" column="13" lean-forward="true" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
-              <folding>
-                <element signature="e#199#200#0" expanded="true" />
-                <element signature="e#228#229#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -65,7 +76,7 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -86,7 +97,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -94,11 +104,6 @@
             <path>
               <item name="Markov" type="b2602c69:ProjectViewProjectNode" />
               <item name="Markov" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Markov" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Markov" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Markov" type="b2602c69:ProjectViewProjectNode" />
@@ -120,6 +125,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -130,7 +136,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15384616" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
@@ -201,17 +207,19 @@
       <workItem from="1583324181433" duration="286000" />
       <workItem from="1583324530335" duration="1579000" />
       <workItem from="1583333566217" duration="2082000" />
+      <workItem from="1585397017374" duration="1201000" />
+      <workItem from="1585398270643" duration="597000" />
+      <workItem from="1585399161732" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3947000" />
+    <option name="totallyTimeSpent" value="5764000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1920" height="1057" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2924298" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30191693" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -246,10 +254,19 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/out/production/Markov/org/markov/Manager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#19460#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/text.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+        <state relative-caret-position="75">
+          <caret line="5" column="74" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="74" />
         </state>
       </provider>
     </entry>
@@ -271,12 +288,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/markov/Manager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="62" column="13" lean-forward="true" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
-          <folding>
-            <element signature="e#199#200#0" expanded="true" />
-            <element signature="e#228#229#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
         </state>
       </provider>
     </entry>

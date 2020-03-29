@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: generator
+  name: generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: generator
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: generator
+    spec:
+      containers:
+      - image: chohanjoo/mwohae-generator:v0.1.2
+        name: mwohae-generator
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: generator
+  name: generator
+spec:
+  ports:
+  - name: 8079-8079
+    port: 8079
+    protocol: TCP
+    targetPort: 8079
+  selector:
+    app: generator
+  type: ClusterIP
+status:
+  loadBalancer: {}
