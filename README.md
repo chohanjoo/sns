@@ -205,9 +205,9 @@ $ kubectl port-forward svc/face 3000:3000
 
 ## Examples
 
-![main_page](/Users/hj/sns/assets/main_page.png)
+![main_page](/assets/main_page.png)
 
-![deshboard](/Users/hj/sns/assets/deshboard.png)
+![deshboard](/assets/deshboard.png)
 
 ## License
 
