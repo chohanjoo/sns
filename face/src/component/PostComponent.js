@@ -16,19 +16,26 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import {getFollowingPostList} from '../api/message';
+import {getFollowingPostList, getUserFriendList} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Bar from "./Bar";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Icon from '@material-ui/core/Icon';
+import { green } from '@material-ui/core/colors';
 
 class PostComponent extends Component {
     state = {
         expanded: false,
-        postList: []
+        expanded_id: "",
+        postList: [],
+        friendList: []
     };
 
-    handleExpandClick = () => {
+    handleExpandClick = (index,e) => {
         this.setState({
-            expanded: !this.state.expanded
+            expanded: !this.state.expanded,
+            expanded_id: index
         })
     };
 
@@ -36,24 +43,40 @@ class PostComponent extends Component {
         getFollowingPostList()
             .then(res => res.json())
             .then(data => {
-                // console.log("data : ",data)
                 const result = data.status;
                 if(result !== 403){
                     this.setState({
                         postList: data
                     })
                 }
-            })
+            });
+        this.getUserFriends();
             // .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처리
+    }
+
+    getUserFriends(){
+        getUserFriendList()
+            .then(res => res.json())
+            .then(data => {
+                const result = data.status;
+                if(result !== 403){
+                    this.setState({
+                        friendList: data.list
+                    })
+                }
+            })
     }
 
     render() {
         const {classes} = this.props;
         return (
             <div>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             <Bar/>
             <MuiThemeProvider>
-                <Container maxWidth="sm">
+                <Container maxWidth="md">
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={8}>
                     {this.state.postList.map((post, index) => (
                         <Card className={classes.root} key={index}>
                             <CardHeader
@@ -91,22 +114,40 @@ class PostComponent extends Component {
                                     className={clsx(classes.expand, {
                                         [classes.expandOpen]: this.state.expanded,
                                     })}
-                                    onClick={this.handleExpandClick}
+                                    onClick={(e) =>this.handleExpandClick(index,e)}
                                     aria-expanded={this.state.expanded}
                                     aria-label="show more"
                                 >
                                     <ExpandMoreIcon/>
                                 </IconButton>
                             </CardActions>
-                            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                            {this.state.expanded_id == index ? <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                 <CardContent>
                                     <Typography paragraph>
                                         {post.contents}
                                     </Typography>
                                 </CardContent>
-                            </Collapse>
+                            </Collapse>: <div></div>}
                         </Card>
                     ))}
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Card className={classes.sidebar}>
+                            {this.state.friendList.map((friend, index) => (
+                                    <CardHeader
+                                        avatar={
+                                            <Avatar src="/broken-image.jpg"/>
+                                        }
+                                        action={
+                                            <Button><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
+                                        }
+                                        title={friend.friend_id}
+                                        key={index}
+                                    />
+                            ))}
+                            </Card>
+                        </Grid>
+                    </Grid>
                 </Container>
             </MuiThemeProvider>
             </div>
@@ -137,6 +178,11 @@ const useStyles = theme => ({
     avatar    : {
         backgroundColor: red[500],
     },
+    sidebar:{
+        position: 'sticky',
+        top: '10%'
+
+    }
 });
 
 export default withStyles(useStyles)(PostComponent)

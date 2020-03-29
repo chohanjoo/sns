@@ -68,7 +68,7 @@ class Bar extends Component {
                             {/*<MenuIcon/>*/}
                         {/*</IconButton>*/}
                         <Typography variant="h6" className={classes.title}>
-                            <Button href="/" color="inherit">Message</Button>
+                            <Button href="/" color="inherit">MWOHAE</Button>
 
                         </Typography>
                         {this.state.username
