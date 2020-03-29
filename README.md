@@ -11,6 +11,8 @@
 
 ## Project Architecture
 
+![mwhae](/assets/mwhae.png)
+
 ### Face
 
 :link: Port : 3000
