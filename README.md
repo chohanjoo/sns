@@ -41,6 +41,8 @@
 
 `springboot` 로 개발된 랜덤 유저, 포스트, 친구 생성기 REST API Server 이다. `Admin` 계정만 접근 가능하다.
 
+필요시에만 deploy 시킨다. 서비스에는 필요없다.
+
 ### API Gateway
 
 :link: Port: 8000
@@ -85,7 +87,15 @@ $ cd shell_script
 $ ./run.sh
 ~~~
 
-:small_red_triangle: Generator는 Intellij 나 Eclipse 로 라이브러리를 추가후 실행한다. 
+#### Generator 
+
+~~~shell
+$ cd generator
+
+$ ./mvnw -U clean install
+
+$ java -Dspring.profiles.active=prod -jar target/*.jar
+~~~
 
 
 
@@ -122,6 +132,18 @@ $ ./make_docker_images.sh
 $ cd shell_script
 
 $ ./apply.sh
+~~~
+
+##### Generator (pod. Deployment, service create)
+
+~~~shell
+$ cd generator
+
+$ ./mvnw -U clean install
+
+$ docker build -t chohanjoo/mwohae-generator:v0.1.2 .
+
+$ kubectl apply -f ../kubernetes/deployment/generator_deployment.yaml
 ~~~
 
 
@@ -183,7 +205,9 @@ $ kubectl port-forward svc/face 3000:3000
 
 ## Examples
 
+![main_page](/Users/hj/sns/assets/main_page.png)
 
+![deshboard](/Users/hj/sns/assets/deshboard.png)
 
 ## License
 
@@ -193,25 +217,25 @@ Mwohae is [MIT licensed](./LICENSE) .
 
 ## Todo
 
-### 1. Jwt 토큰 만료후 페이지 접근하면 오류 발생 (Jwt 토큰 만료 체크)
+1. Jwt 토큰 만료후 페이지 접근하면 오류 발생 (Jwt 토큰 만료 체크)**
 
-### ~~2.  Profile - 추천 친구 리스트에서 친구 리스트 제외	[feature/#7]~~
+~~2.  Profile - 추천 친구 리스트에서 친구 리스트 제외	[feature/#7]~~
 
-#### 	~~2-1. 추천 친구 알고리즘 추가 - 함께 아는 친구 순~~
+~~2-1. 추천 친구 알고리즘 추가 - 함께 아는 친구 순~~
 
-### 3. Login 후 token 저장 실패시 오류 발생
+3. Login 후 token 저장 실패시 오류 발생
 
-### ~~4. Post - 최근 내 게시글 + 친구들 게시글	[feature/#7]~~
+~~4. Post - 최근 내 게시글 + 친구들 게시글	[feature/#7]~~
 
-### 5. 3개의 서비스에 중복되는 코드 존재 (mysql query 중복 문제 해결)
+5. 3개의 서비스에 중복되는 코드 존재 (mysql query 중복 문제 해결)
 
-### 6. [ 스프링 부트를 이용한 마이크로 서비스 개발 ] 책 p.195 인스턴스 종료시 에러 해결하는 로드 밸런싱 전략 미세 조정 및 하이스트릭스로 서킷 브레이커 구현 시 에러 발생
+6. [ 스프링 부트를 이용한 마이크로 서비스 개발 ] 책 p.195 인스턴스 종료시 에러 해결하는 로드 밸런싱 전략 미세 조정 및 하이스트릭스로 서킷 브레이커 구현 시 에러 발생
 
-### ~~7. 간헐적인 CORS 문제 발생 [feature/#15]~~
+~~7. 간헐적인 CORS 문제 발생 [feature/#15]~~
 
-### 8. 현재 Spring Security가 모든 MSA service에 포함되어 있지만 API Gateway로 변경
+8. 현재 Spring Security가 모든 MSA service에 포함되어 있지만 API Gateway로 변경
 
-### 9. LIve에서 Service registry - url 를 사용함 ==> serviceId 로 변경
+9. LIve에서 Service registry - url 를 사용함 ==> serviceId 로 변경
 
 
 
