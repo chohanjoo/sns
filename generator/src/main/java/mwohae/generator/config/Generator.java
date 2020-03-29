@@ -25,7 +25,8 @@ public class Generator {
 
     RandomNameGenerator generator = new RandomNameGenerator(0);
 
-    Manager manager = new Manager("res/text.txt");
+//    Manager manager = new Manager("res/text.txt");
+    Manager manager = new Manager();
 
     public void createUser(){
         CreateUserRequest request = new CreateUserRequest();
