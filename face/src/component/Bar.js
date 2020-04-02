@@ -83,7 +83,7 @@ class Bar extends Component {
                             onClose={this.handleClose}
                         >
                             <MenuItem onClick={this.profileHandler}>Profile</MenuItem>
-                            <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                            {/*<MenuItem onClick={this.handleClose}>My account</MenuItem>*/}
                             <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
                         </Menu>
                     </Toolbar>

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -16,7 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import {getFollowingPostList, getUserFriendList} from '../api/message';
+import {getFollowingPostList, getRecommendFriendList, getUserFriendList} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Bar from "./Bar";
 import Grid from "@material-ui/core/Grid";
@@ -29,7 +28,8 @@ class PostComponent extends Component {
         expanded: false,
         expanded_id: "",
         postList: [],
-        friendList: []
+        friendList: [],
+        recommendUserList: []
     };
 
     handleExpandClick = (index,e) => {
@@ -51,6 +51,7 @@ class PostComponent extends Component {
                 }
             });
         this.getUserFriends();
+        this.getRecommendFriends()
             // .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처리
     }
 
@@ -65,6 +66,21 @@ class PostComponent extends Component {
                     })
                 }
             })
+    }
+
+    getRecommendFriends(){
+        getRecommendFriendList()
+            .then(response => {
+                const result = response.status;
+                if(result === 200){
+                    response.json()
+                        .then(users => {
+                            this.setState({
+                                recommendUserList: users['list']
+                            })
+                        })
+                }
+            });
     }
 
     render() {
@@ -93,11 +109,11 @@ class PostComponent extends Component {
                                 title={post.writer}
                                 subheader={post.update_date}
                             />
-                            <CardMedia
-                                className={classes.media}
-                                image="/static/images/cards/paella.jpg"
-                                title={post.title}
-                            />
+                            {/*<CardMedia*/}
+                                {/*className={classes.media}*/}
+                                {/*image="/static/images/cards/paella.jpg"*/}
+                                {/*title={post.title}*/}
+                            {/*/>*/}
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p">
                                     {post.contents}
@@ -121,7 +137,7 @@ class PostComponent extends Component {
                                     <ExpandMoreIcon/>
                                 </IconButton>
                             </CardActions>
-                            {this.state.expanded_id == index ? <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                            {this.state.expanded_id === index ? <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                 <CardContent>
                                     <Typography paragraph>
                                         {post.contents}
@@ -131,21 +147,42 @@ class PostComponent extends Component {
                         </Card>
                     ))}
                         </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Card className={classes.sidebar}>
+
+                        <Grid item xs={6} md={4}>
+                            <div className={classes.sidebar}>
+                                <div className={classes.scroll}>
+                            <Card>
                             {this.state.friendList.map((friend, index) => (
                                     <CardHeader
                                         avatar={
-                                            <Avatar src="/broken-image.jpg"/>
-                                        }
-                                        action={
-                                            <Button><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
+                                            <Avatar className={classes.small} src="/broken-image.jpg"/>
                                         }
                                         title={friend.friend_id}
                                         key={index}
+                                        className={classes.sideContext}
                                     />
                             ))}
                             </Card>
+                                </div>
+                                <br/>
+                                <div className={classes.scroll}>
+                                <Card>
+                                    {this.state.recommendUserList.map((friend, index) => (
+                                        <CardHeader
+                                            avatar={
+                                                <Avatar className={classes.small} src="/broken-image.jpg"/>
+                                            }
+                                            action={
+                                                <Button className={classes.sideButton}><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
+                                            }
+                                            title={friend.friend_id}
+                                            key={index}
+                                            className={classes.sideContext}
+                                        />
+                                    ))}
+                                </Card>
+                                </div>
+                            </div>
                         </Grid>
                     </Grid>
                 </Container>
@@ -180,8 +217,23 @@ const useStyles = theme => ({
     },
     sidebar:{
         position: 'sticky',
-        top: '10%'
-
+        top: '10%',
+    },
+    sideContext: {
+        padding: '1.5%',
+    },
+    sideButton: {
+        marginTop: '15%'
+    },
+    small: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+    },
+    scroll: {
+        maxHeight: '250px',
+        overflowY: 'auto',
+        boxShadow: '0px 5px 15px rgba(0, 0, 0, .3)',
+        borderRadius: '10px'
     }
 });
 
