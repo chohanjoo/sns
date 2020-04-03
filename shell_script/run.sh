@@ -14,6 +14,8 @@ java -Dspring.porfiles.active=dev -jar ../user/target/*.jar 1>log/user.log 2>&1 
 echo "user run success"
 java -Dspring.porfiles.active=dev -jar ../post/target/*.jar 1>log/post.log 2>&1 &
 echo "post run success"
+java -Dspring.porfiles.active=dev -jar ../generator/target/*.jar 1>log/generator.log 2>&1 &
+echo "post run success"
 
 cd ../face
 npm start 1>../shell_script/log/face.log 2>1& &

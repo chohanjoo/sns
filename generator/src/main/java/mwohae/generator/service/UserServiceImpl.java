@@ -5,6 +5,8 @@ import mwohae.generator.dto.FriendDto;
 import mwohae.generator.dto.UserDto;
 import mwohae.generator.request.CreateFriendRequest;
 import mwohae.generator.request.CreateUserRequest;
+import org.kohsuke.randname.RandomNameGenerator;
+import org.markov.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -23,6 +25,10 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    RandomNameGenerator generator = new RandomNameGenerator();
+
+    Manager manager = new Manager();
 
     @Override
     public List<UserDto> retrieveAllUser() {
@@ -64,5 +70,37 @@ public class UserServiceImpl implements UserService{
         user.setAuthorities(getAuthorities(user_id));
 
         return user;
+    }
+
+    @Override
+    public void createRandomUser() {
+        CreateUserRequest request = new CreateUserRequest();
+        String word = generator.next();
+        request.setName(word);
+        request.setPw(word);
+        request.setId(word);
+        request.setEmail(word + "@naver.com");
+
+        this.createUser(request);
+    }
+
+    @Override
+    public void createRandomFriend() {
+        List<UserDto> userList = this.retrieveAllUser();
+        Random random = new Random();
+
+        CreateFriendRequest request = new CreateFriendRequest();
+        int user_index = random.nextInt(userList.size());
+        int friend_index = random.nextInt(userList.size());
+
+        String user_id = userList.get(user_index).getId();
+        String friend_id = userList.get(friend_index).getId();
+
+        request.setUser_id(user_id);
+        request.setFriend_id(friend_id);
+
+        if(user_id != friend_id){
+            this.createUserFriend(request);
+        }
     }
 }

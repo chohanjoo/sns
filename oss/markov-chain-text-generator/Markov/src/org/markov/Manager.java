@@ -77,8 +77,8 @@ public class Manager {
 				"All! Of! You! Are! Going! To! Die!\n" +
 				"This *is* the fuck, my soggy friend! You are out of business. The Lost MC are out of business. The guns and crank in this area go through Trevor Philips Enterprise, or they ain't going!\n" +
 				"You can jerk me off if I get bored. I'm kidding! You can suck me off.\n" +
-				"HE COULD NOT deal with people talking about him. It�s taken me some time since he died to get used to talking about him because I was under such strict instructions not to. But he fucked up something really major. He made a really dumb, bad decision. And it�s my right now to ignore all the other things that I thought were dumb, too. Maybe if I hadn�t felt I couldn�t talk about him to other people this wouldn�t have happened. I�m not going to let those preferences that led, in one way or another, to him killing himself guide my life anymore. I reject them.\n" +
-				"Like any wide-spread activity, the selfie is not immune to tragedy. In pursuit of the ultimate profile pic, stick-yielding youths often go to extremes: They perch themselves on cliffs. They pose beside wild animals. They play chicken with oncoming trains. And sometimes, they don�t make it out alive.\n" +
+				"HE COULD NOT deal with people talking about him. It's taken me some time since he died to get used to talking about him because I was under such strict instructions not to. But he fucked up something really major. He made a really dumb, bad decision. And it's my right now to ignore all the other things that I thought were dumb, too. Maybe if I hadn't felt I couldn't talk about him to other people this wouldn't have happened. I'm not going to let those preferences that led, in one way or another, to him killing himself guide my life anymore. I reject them.\n" +
+				"Like any wide-spread activity, the selfie is not immune to tragedy. In pursuit of the ultimate profile pic, stick-yielding youths often go to extremes: They perch themselves on cliffs. They pose beside wild animals. They play chicken with oncoming trains. And sometimes, they don't make it out alive.\n" +
 				"The Chinese game is viewed as a much tougher challenge than chess for computers because there are many more ways a Go match can play out.\n" +
 				"One independent expert called it a breakthrough for AI with potentially far-reaching consequences.\n" +
 				"It now plays different versions of itself millions and millions of times, and each time it gets incrementally better. It learns from its mistakes.\n" +
@@ -210,7 +210,7 @@ public class Manager {
 				"But first, let us acknowledge that AI has gotten a lot of attention recently, in particular work on \"deep learning\" is being discussed in mainstream press as well as turned into startups that get bought by giant companies for bizarre amounts of money.\n" +
 				"With few exceptions, the tasks that deep neural networks have excelled at are what are called pattern recognition problems.\n" +
 				"You can see the general effect is to shift the curves to the right as the sample size increases. This implies that you get fewer matches with a larger sample.\n" +
-				"A few notes on our methodology: We�ve defined �joke� pretty broadly here. Yes, a joke can be a one-liner built from a setup and a punch line, but it can also be an act of physical comedy. Pretending to stick a needle in your eye, or pooping in the street while wearing a wedding dress: both jokes. A joke, as defined by this list, is a discrete moment of comedy, whether from stand-up, a sketch, an album, a movie, or a TV show.\n" +
+				"A few notes on our methodology: We've defined 'joke' pretty broadly here. Yes, a joke can be a one-liner built from a setup and a punch line, but it can also be an act of physical comedy. Pretending to stick a needle in your eye, or pooping in the street while wearing a wedding dress: both jokes. A joke, as defined by this list, is a discrete moment of comedy, whether from stand-up, a sketch, an album, a movie, or a TV show.\n" +
 				"More powerful hardware is being made available to neuroscientists to do computation-intensive simulations. Neuropharmacologists design drugs with higher specificity, allowing researches to selectively target given receptor subtypes. Present scanning techniques are improved and new ones are under development. The list could be continued. All these innovations will give neuroscientists very powerful new tools that will facilitate their research.\n" +
 				"Remember the first time you went to a show and saw your favorite band. You wore their shirt, and sang every word. You didn't know anything about scene politics, haircuts, or what was cool. All you knew was that this music made you feel different from anyone you shared a locker with. Someone finally understood you. This is what music is about.\n" +
 				"Music should strike fire from the heart of man, and bring tears from the eyes of woman.\n" +
@@ -227,10 +227,10 @@ public class Manager {
 				"I'm waiting to see if I'm already a winner.\n" +
 				"I have an ulterior motive for writing this. I want to sharpen my technical writing skills. Any comments or criticisms about contents or style would be appreciated. Also, I will be happy to try to answer any questions you have about assembly language.\n" +
 				"Prepare to die.\n" +
-				"We�ve got company!\n" +
+				"We've got company!\n" +
 				"You have got to be kidding me.\n" +
-				"You just don�t get it, do you?\n" +
-				"I�ve gotta get me one of these!";
+				"You just don't get it, do you?\n" +
+				"I've gotta get me one of these!";
 	}
 	public static void main(String[] args)
 	{

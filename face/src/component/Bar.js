@@ -68,7 +68,7 @@ class Bar extends Component {
                             {/*<MenuIcon/>*/}
                         {/*</IconButton>*/}
                         <Typography variant="h6" className={classes.title}>
-                            <Button href="/" color="inherit">Message</Button>
+                            <Button href="/" color="inherit">MWOHAE</Button>
 
                         </Typography>
                         {this.state.username
@@ -83,7 +83,7 @@ class Bar extends Component {
                             onClose={this.handleClose}
                         >
                             <MenuItem onClick={this.profileHandler}>Profile</MenuItem>
-                            <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                            {/*<MenuItem onClick={this.handleClose}>My account</MenuItem>*/}
                             <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
                         </Menu>
                     </Toolbar>

@@ -24,3 +24,8 @@ cd ../post
 ./mvnw clean
 ./mvnw install
 echo '[Post] SUCCESS'
+
+cd ../generator
+./mvnw clean
+./mvnw install
+echo '[Generator] SUCCESS'

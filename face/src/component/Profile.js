@@ -17,6 +17,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {createFriend, deleteFriend, getRecommendFriendList, getUserFriendList} from "../api/message";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import {getUser} from "../api/storage";
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import PeopleIcon from '@material-ui/icons/People';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,7 +42,8 @@ class Profile extends Component {
         userFriendList: [],
         open: false,
         message: "",
-        severity: ""
+        severity: "",
+        value: "recents"
     };
 
     componentDidMount() {
@@ -132,18 +139,47 @@ class Profile extends Component {
         );
     }
 
+    handleChange = (event, newValue) => {
+        this.setState({
+            value: newValue
+        })
+    };
+
 
     render() {
         const {classes} = this.props;
+        const {value} = this.state;
 
         return(
             <div>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                 <Bar/>
                 {this.snackbar()}
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="md">
                         <div className={classes.root}>
-                            <Grid container spacing={4}>
+                            <div>
+                                <Grid container spacing={4}>
+                                    <Grid item xs={12} md={4}>
+                            <Avatar src="/broken-image.jpg" className={classes.large} />
+                                    </Grid>
+                                    <Grid item xs={12} md={8}>
+                                        <Typography variant="h4" gutterBottom className={classes.section}>
+                                            {getUser()}
+                                        </Typography>
+                                        <Typography variant="h6" gutterBottom className={classes.section}>
+                                            게시글 &nbsp; &nbsp; 친구
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            <BottomNavigation value={value} onChange={this.handleChange} className={classes.navigation}>
+                                <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
+                                <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
+                                <BottomNavigationAction label="Friends" value="friends" icon={<PeopleIcon />} />
+                                <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+                            </BottomNavigation>
+                            {this.state.value === 'friends' ?                             <Grid container spacing={4}>
                                 <Grid item xs={12} md={6}>
                                     <Typography variant="h5" className={classes.title}>
                                         친구 리스트
@@ -195,7 +231,7 @@ class Profile extends Component {
                                         </List>
                                     </div>
                                 </Grid>
-                            </Grid>
+                            </Grid> : <div></div>}
                         </div>
                     </Container>
                 </ThemeProvider>
@@ -218,6 +254,19 @@ const useStyles = theme => ({
     submit: {
         margin: theme.spacing(0, 1, 0),
     },
+    large: {
+        marginTop: "10%",
+        width: theme.spacing(15),
+        height: theme.spacing(15),
+    },
+    section: {
+        marginTop: "5%"
+    },
+    navigation: {
+        flexGrow: 1,
+        maxWidth: 952,
+        marginTop:"10%"
+    }
 });
 
 const theme = createMuiTheme({

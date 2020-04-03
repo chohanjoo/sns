@@ -11,6 +11,8 @@
 
 ## Project Architecture
 
+![mwhae](/assets/mwhae.png)
+
 ### Face
 
 :link: Port : 3000
@@ -208,6 +210,8 @@ $ kubectl port-forward svc/face 3000:3000
 ![main_page](/assets/main_page.png)
 
 ![deshboard](/assets/deshboard.png)
+
+![kiali](/assets/kiali.png)
 
 ## License
 
