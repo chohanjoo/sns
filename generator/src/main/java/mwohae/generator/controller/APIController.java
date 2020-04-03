@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import mwohae.generator.config.Generator;
+import mwohae.generator.service.PostService;
 import mwohae.generator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,11 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = {"4. Generator"})
+@Api(tags = {"4-1. Generator API"})
 @CrossOrigin
 @RestController
-@RequestMapping("generator")
-public class GeneratorController {
+@RequestMapping("generator/api")
+public class APIController {
 
     @Autowired
     private UserService userService;
@@ -24,24 +25,27 @@ public class GeneratorController {
     @Autowired
     private Generator generator;
 
+    @Autowired
+    private PostService postService;
+
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-    @ApiOperation(value = "랜덤 User 1000명 생성")
-    @GetMapping(value = "/users")
+    @ApiOperation(value = "랜덤 User 생성")
+    @GetMapping(value = "/user")
     public void createUsers() {
-        generator.createUser();
+        userService.createRandomUser();
     }
 
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-    @ApiOperation(value = "랜덤 User Friend 2000명 생성")
-    @GetMapping(value = "/friends")
+    @ApiOperation(value = "랜덤 User Friend 생성")
+    @GetMapping(value = "/friend")
     public void createFriends() {
-        generator.createFriend();
+        userService.createRandomFriend();
     }
 
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-    @ApiOperation(value = "랜덤 Post 2000개 생성")
-    @GetMapping(value = "/posts")
+    @ApiOperation(value = "랜덤 Post 생성")
+    @GetMapping(value = "/post")
     public void createPosts() {
-        generator.createPosts();
+        postService.createRandomPost();
     }
 }

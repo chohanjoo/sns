@@ -8,5 +8,6 @@ echo `kubectl apply -f auth_deployment.yaml`
 echo `kubectl apply -f user_deployment.yaml`
 echo `kubectl apply -f post_deployment.yaml`
 echo `kubectl apply -f face_deployment.yaml`
+echo `kubectl apply -f generator_deployment.yaml`
 
 echo '[SUCCESS]'

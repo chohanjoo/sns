@@ -14,4 +14,6 @@ public interface UserService extends UserDetailsService {
     public void createUser(CreateUserRequest request);
     public void createUserFriend(CreateFriendRequest request);
     public Collection<GrantedAuthority> getAuthorities(String user_id);
+    public void createRandomUser();
+    public void createRandomFriend();
 }

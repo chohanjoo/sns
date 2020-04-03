@@ -23,7 +23,7 @@ public class Generator {
     @Autowired
     PostService postService;
 
-    RandomNameGenerator generator = new RandomNameGenerator(0);
+    RandomNameGenerator generator = new RandomNameGenerator();
 
 //    Manager manager = new Manager("res/text.txt");
     Manager manager = new Manager();

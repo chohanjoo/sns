@@ -211,6 +211,8 @@ $ kubectl port-forward svc/face 3000:3000
 
 ![deshboard](/assets/deshboard.png)
 
+![kiali](/assets/kiali.png)
+
 ## License
 
 Mwohae is [MIT licensed](./LICENSE) .
