@@ -48,9 +48,8 @@ public class AuthController {
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
     @PostMapping(value = "/signup")
     public CommonResult signin(@RequestBody CreateUserRequest request) {
-
-        userService.createAdmin(request);
-
+//        userService.createAdmin(request);
+        userService.createUser(request);
         return responseService.getSuccessResult();
     }
 }
