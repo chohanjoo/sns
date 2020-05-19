@@ -60,8 +60,8 @@ public class PostController {
     @ApiOperation(value = "post like 조회")
     @GetMapping("/like")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<PostLikeDto> retrievePostLike(@RequestParam String userId){
-        return this.postService.retrievePostLikes(userId);
+    public List<PostDto> retrievePostLike(@RequestParam String userId){
+        return this.postService.retrieveLikePostList(userId);
     }
 
     @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })

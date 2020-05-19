@@ -191,6 +191,7 @@ class PostComponent extends Component {
                     ))}
                         </Grid>
 
+                        {window.innerWidth > 960 ?
                         <Grid item xs={6} md={4}>
                             <div className={classes.sidebar}>
                                 <div className={classes.scroll}>
@@ -227,6 +228,7 @@ class PostComponent extends Component {
                                 </div>
                             </div>
                         </Grid>
+                            :<div></div> }
                     </Grid>
                 </Container>
             </MuiThemeProvider>

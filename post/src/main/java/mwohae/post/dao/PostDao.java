@@ -14,5 +14,6 @@ public interface PostDao {
     public void createPost(PostDto postDto);
     public void createPostLike(PostLikeDto postLikeDto);
     public List<PostLikeDto> retrievePostLikes(@Param("userId") String userId);
+    public List<PostDto> retrieveLikePostList(@Param("userId") String userId);
     public void deletePostLike(CreatePostLikeRequest request);
 }

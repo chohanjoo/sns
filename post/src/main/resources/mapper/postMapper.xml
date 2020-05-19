@@ -35,6 +35,33 @@
         insert into likes (user_id, post_id, is_love) values (#{user_id}, #{post_id}, #{is_love})
     </insert>
 
+    <resultMap id="postListMap" type="mwohae.post.dto.PostDto">
+        <id property="id" column="id"/>
+        <result column="writer" property="writer"/>
+        <result column="contents" property="contents"/>
+        <result column="title" property="title"/>
+        <result column="create_date" property="create_date"/>
+        <association property="like" resultMap="likePostListMap"/>
+    </resultMap>
+    
+    <resultMap id="likePostListMap" type="mwohae.post.dto.PostLikeDto">
+        <id property="user_id" column="user_id" />
+        <id property="post_id" column="post_id" />
+    </resultMap>
+
+    <select id="retrieveLikePostList" resultMap="postListMap">
+        select
+            p.id,
+            p.writer,
+            p.title,
+            p.contents,
+            p.create_date
+        from post as p
+        join likes as l
+        on p.id = l.post_id
+        where l.user_id = #{userId}
+    </select>
+
     <select id="retrievePostLikes" resultType="mwohae.post.dto.PostLikeDto">
         select
           user_id,

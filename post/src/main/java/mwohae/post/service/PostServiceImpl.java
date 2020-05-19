@@ -111,6 +111,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDto> retrieveLikePostList(String userId) {
+        return this.postDao.retrieveLikePostList(userId);
+    }
+
+    @Override
     public void deletePostLike(CreatePostLikeRequest request) {
         postDao.deletePostLike(request);
     }
