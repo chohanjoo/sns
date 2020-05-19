@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import mwohae.post.dto.PostDto;
+import mwohae.post.dto.PostLikeDto;
+import mwohae.post.request.CreatePostLikeRequest;
 import mwohae.post.request.CreatePostRequest;
 import mwohae.post.request.UserIdRequest;
 import mwohae.post.service.PostService;
@@ -44,5 +46,29 @@ public class PostController {
     @ResponseStatus(value = HttpStatus.OK)
     public void createPost(CreatePostRequest request){
         postService.createPost(request);
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "post like 생성")
+    @PostMapping("/like")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void createPostLike(@RequestBody CreatePostLikeRequest request){
+        postService.createPostLike(request);
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "post like 조회")
+    @GetMapping("/like")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<PostLikeDto> retrievePostLike(@RequestParam String userId){
+        return this.postService.retrievePostLikes(userId);
+    }
+
+    @ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+    @ApiOperation(value = "post like 삭제")
+    @DeleteMapping("/like")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deletePostLike(@RequestBody CreatePostLikeRequest request){
+        postService.deletePostLike(request);
     }
 }

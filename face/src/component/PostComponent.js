@@ -15,13 +15,20 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import {getFollowingPostList, getRecommendFriendList, getUserFriendList} from '../api/message';
+import {
+    createPostLike,
+    deletePostLike,
+    getFollowingPostList,
+    getRecommendFriendList,
+    getUserFriendList
+} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Bar from "./Bar";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Icon from '@material-ui/core/Icon';
 import { green } from '@material-ui/core/colors';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 class PostComponent extends Component {
     state = {
@@ -29,7 +36,10 @@ class PostComponent extends Component {
         expanded_id: "",
         postList: [],
         friendList: [],
-        recommendUserList: []
+        recommendUserList: [],
+        items: 5,
+        preItems: 0,
+        heart: false
     };
 
     handleExpandClick = (index,e) => {
@@ -52,6 +62,7 @@ class PostComponent extends Component {
             });
         this.getUserFriends();
         this.getRecommendFriends()
+        window.addEventListener('scroll',this.infiniteScroll,true);
             // .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처리
     }
 
@@ -83,6 +94,31 @@ class PostComponent extends Component {
             });
     }
 
+    infiniteScroll = () => {
+        let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+
+        let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+
+        let clientHeight = document.documentElement.clientHeight;
+
+        if(scrollTop + clientHeight === scrollHeight) {
+            this.setState({
+                // preItems: this.state.items,
+                items: this.state.items + 5
+            });
+        }
+    };
+
+    createPostLike = (postId) => {
+        createPostLike(postId);
+        this.componentDidMount();
+    };
+
+    deletePostLike = (postId) => {
+        deletePostLike(postId);
+        this.componentDidMount();
+    };
+
     render() {
         const {classes} = this.props;
         return (
@@ -93,7 +129,7 @@ class PostComponent extends Component {
                 <Container maxWidth="md">
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={8}>
-                    {this.state.postList.map((post, index) => (
+                    {this.state.postList.slice(this.state.preItems,this.state.items).map((post, index) => (
                         <Card className={classes.root} key={index}>
                             <CardHeader
                                 avatar={
@@ -120,9 +156,16 @@ class PostComponent extends Component {
                                 </Typography>
                             </CardContent>
                             <CardActions disableSpacing>
-                                <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon/>
-                                </IconButton>
+                                {post.like ?
+                                    <IconButton aria-label="add to favorites" onClick={() => this.deletePostLike(post.id)}>
+                                        {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                        <FavoriteIcon style={{ color: red[500] }}/>
+                                    </IconButton> :
+                                    <IconButton aria-label="add to favorites" onClick={() => this.createPostLike(post.id)}>
+                                        {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                        <FavoriteBorderIcon/>
+                                    </IconButton>}
+
                                 <IconButton aria-label="share">
                                     <ShareIcon/>
                                 </IconButton>
@@ -152,7 +195,7 @@ class PostComponent extends Component {
                             <div className={classes.sidebar}>
                                 <div className={classes.scroll}>
                             <Card>
-                            {this.state.friendList.map((friend, index) => (
+                            {this.state.friendList.slice(0,10).map((friend, index) => (
                                     <CardHeader
                                         avatar={
                                             <Avatar className={classes.small} src="/broken-image.jpg"/>
@@ -167,7 +210,7 @@ class PostComponent extends Component {
                                 <br/>
                                 <div className={classes.scroll}>
                                 <Card>
-                                    {this.state.recommendUserList.map((friend, index) => (
+                                    {this.state.recommendUserList.slice(0,10).map((friend, index) => (
                                         <CardHeader
                                             avatar={
                                                 <Avatar className={classes.small} src="/broken-image.jpg"/>

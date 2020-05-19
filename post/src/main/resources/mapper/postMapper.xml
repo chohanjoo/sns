@@ -31,4 +31,20 @@
         insert into post (writer, title, contents, love) values (#{writer}, #{title}, #{contents}, #{love})
     </insert>
 
+    <insert id="createPostLike" useGeneratedKeys="true" parameterType="mwohae.post.dto.PostLikeDto">
+        insert into likes (user_id, post_id, is_love) values (#{user_id}, #{post_id}, #{is_love})
+    </insert>
+
+    <select id="retrievePostLikes" resultType="mwohae.post.dto.PostLikeDto">
+        select
+          user_id,
+          post_id,
+          is_love
+        from likes
+        where user_id = #{userId}
+    </select>
+
+    <delete id="deletePostLike" parameterType="mwohae.post.request.CreatePostLikeRequest">
+        delete from likes where user_id = #{user_id} and post_id = #{post_id}
+    </delete>
 </mapper>

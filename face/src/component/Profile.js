@@ -14,7 +14,7 @@ import Bar from "./Bar";
 import Button from "@material-ui/core/Button";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {createFriend, deleteFriend, getRecommendFriendList, getUserFriendList} from "../api/message";
+import {createFriend, deleteFriend, getPostLikes, getRecommendFriendList, getUserFriendList} from "../api/message";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import {getUser} from "../api/storage";
@@ -23,6 +23,20 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PeopleIcon from '@material-ui/icons/People';
+import MuiThemeProvider from "./PostComponent";
+import {green, red} from "@material-ui/core/colors";
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import clsx from 'clsx';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -43,7 +57,10 @@ class Profile extends Component {
         open: false,
         message: "",
         severity: "",
-        value: "recents"
+        value: "recents",
+        postList: [],
+        preItems: 0,
+        items: 5
     };
 
     componentDidMount() {
@@ -53,6 +70,22 @@ class Profile extends Component {
     updateUserProfile(){
         this.getUserFriends();
         this.getRecommendFriends();
+        this.getPostLikeList();
+    }
+
+    getPostLikeList(){
+        getPostLikes()
+            .then(response => {
+                const result = response.status;
+                if(result === 200){
+                    response.json()
+                        .then(posts => {
+                            this.setState({
+                                postList: posts
+                            })
+                        })
+                }
+            })
     }
 
     getRecommendFriends(){
@@ -179,6 +212,84 @@ class Profile extends Component {
                                 <BottomNavigationAction label="Friends" value="friends" icon={<PeopleIcon />} />
                                 <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
                             </BottomNavigation>
+                            {this.state.value === 'favorites' ?
+                                console.log(this.state.postList)
+                                // <div>
+                                //     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                                //     <Bar/>
+                                //     <MuiThemeProvider>
+                                //         <Container maxWidth="md">
+                                //             <Grid container spacing={2}>
+                                //                 <Grid item xs={12} md={8}>
+                                //                     {this.state.postList.slice(this.state.preItems,this.state.items).map((post, index) => (
+                                //                         <Card className={classes.root} key={index}>
+                                //                             <CardHeader
+                                //                                 avatar={
+                                //                                     <Avatar aria-label="recipe" className={classes.avatar}>
+                                //                                         R
+                                //                                     </Avatar>
+                                //                                 }
+                                //                                 action={
+                                //                                     <IconButton aria-label="settings">
+                                //                                         <MoreVertIcon/>
+                                //                                     </IconButton>
+                                //                                 }
+                                //                                 title={post.writer}
+                                //                                 subheader={post.update_date}
+                                //                             />
+                                //                             {/*<CardMedia*/}
+                                //                             {/*className={classes.media}*/}
+                                //                             {/*image="/static/images/cards/paella.jpg"*/}
+                                //                             {/*title={post.title}*/}
+                                //                             {/*/>*/}
+                                //                             <CardContent>
+                                //                                 <Typography variant="body2" color="textSecondary" component="p">
+                                //                                     {post.contents}
+                                //                                 </Typography>
+                                //                             </CardContent>
+                                //                             <CardActions disableSpacing>
+                                //                                 {this.state.heart ?
+                                //                                     <IconButton aria-label="add to favorites" onClick={() => this.createPostLike(post.id)}>
+                                //                                         {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                //                                         <FavoriteIcon style={{ color: red[500] }}/>
+                                //                                     </IconButton> :
+                                //                                     <IconButton aria-label="add to favorites" onClick={() => this.createPostLike(post.id)}>
+                                //                                         {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                //                                         <FavoriteBorderIcon/>
+                                //                                     </IconButton>}
+                                //
+                                //                                 <IconButton aria-label="share">
+                                //                                     <ShareIcon/>
+                                //                                 </IconButton>
+                                //                                 <IconButton
+                                //                                     className={clsx(classes.expand, {
+                                //                                         [classes.expandOpen]: this.state.expanded,
+                                //                                     })}
+                                //                                     onClick={(e) =>this.handleExpandClick(index,e)}
+                                //                                     aria-expanded={this.state.expanded}
+                                //                                     aria-label="show more"
+                                //                                 >
+                                //                                     <ExpandMoreIcon/>
+                                //                                 </IconButton>
+                                //                             </CardActions>
+                                //                             {this.state.expanded_id === index ? <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                                //                                 <CardContent>
+                                //                                     <Typography paragraph>
+                                //                                         {post.contents}
+                                //                                     </Typography>
+                                //                                 </CardContent>
+                                //                             </Collapse>: <div></div>}
+                                //                         </Card>
+                                //                     ))}
+                                //                 </Grid>
+                                //
+                                //             </Grid>
+                                //         </Container>
+                                //     </MuiThemeProvider>
+                                // </div>
+                            :
+                                <div></div>
+                            }
                             {this.state.value === 'friends' ?                             <Grid container spacing={4}>
                                 <Grid item xs={12} md={6}>
                                     <Typography variant="h5" className={classes.title}>
