@@ -15,7 +15,7 @@
 
 ### Face
 
-:link: Port : 3000
+:link: Port : 3030 (dev port : 3000)
 
 `ReactJS` 로 개발된 UI 이다. `MATERIAL-UI` 라이브러리를 사용하여 UI를 그렸으며 REST API를 호출하여 백엔드와 커뮤니케이션 한다. 
 
@@ -207,7 +207,9 @@ $ kubectl port-forward svc/face 3000:3000
 
 ## Examples
 
-![main_page](/assets/main_page.png)
+![newsfeed](/assets/newsfeed.gif)
+
+![profile](/assets/profile.gif)
 
 ![deshboard](/assets/deshboard.png)
 
