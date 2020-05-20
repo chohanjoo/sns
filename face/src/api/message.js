@@ -2,6 +2,29 @@ import {getToken, getUser} from "./storage";
 
 const server_url = "http://localhost:8000/api";
 
+export function deletePostLike(postId) {
+    const body = {
+        user_id: getUser(),
+        post_id: postId
+    };
+
+    return deleteMethod(gateway_server("/post/like"), body, postHeaderInclToken);
+}
+export function getPostLikes() {
+    const path = "/post/like?userId=" + getUser();
+    return getMethod(gateway_server(path), getHeader);
+}
+
+export function createPostLike(postId) {
+    const body = {
+        user_id: getUser(),
+        post_id: postId,
+        is_love: true
+    };
+
+    return postMethod(gateway_server("/post/like"), body, postHeaderInclToken);
+}
+
 export function getRecommendFriendList(){
     const path = "/user/friend/recommend" + "?user_id=" + getUser();
 

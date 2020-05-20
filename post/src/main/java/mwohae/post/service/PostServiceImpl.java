@@ -4,6 +4,8 @@ import mwohae.post.dao.PostDao;
 import mwohae.post.dao.UserDao;
 import mwohae.post.dto.FriendDto;
 import mwohae.post.dto.PostDto;
+import mwohae.post.dto.PostLikeDto;
+import mwohae.post.request.CreatePostLikeRequest;
 import mwohae.post.request.CreatePostRequest;
 import mwohae.post.response.ListResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +71,23 @@ public class PostServiceImpl implements PostService {
 
         }
 
+        List<PostLikeDto> postLikeList = this.postDao.retrievePostLikes(user_id);
+
+        List<Integer> postIdList = new ArrayList<>();
+
+        for(PostLikeDto postLikeDto : postLikeList){
+            postIdList.add(postLikeDto.getPost_id());
+        }
+
+        for(PostDto post : postList){
+            if(postIdList.contains(post.getId())){
+                post.setLike(true);
+            }
+            else{
+                post.setLike(false);
+            }
+        }
+
         return postList;
     }
 
@@ -77,5 +96,27 @@ public class PostServiceImpl implements PostService {
         PostDto postDto = PostDto.create(request);
 
         postDao.createPost(postDto);
+    }
+
+    @Override
+    public void createPostLike(CreatePostLikeRequest request) {
+        PostLikeDto postLikeDto = PostLikeDto.create(request);
+
+        postDao.createPostLike(postLikeDto);
+    }
+
+    @Override
+    public List<PostLikeDto> retrievePostLikes(String userId) {
+        return this.postDao.retrievePostLikes(userId);
+    }
+
+    @Override
+    public List<PostDto> retrieveLikePostList(String userId) {
+        return this.postDao.retrieveLikePostList(userId);
+    }
+
+    @Override
+    public void deletePostLike(CreatePostLikeRequest request) {
+        postDao.deletePostLike(request);
     }
 }

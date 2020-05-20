@@ -14,15 +14,31 @@ import Bar from "./Bar";
 import Button from "@material-ui/core/Button";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {createFriend, deleteFriend, getRecommendFriendList, getUserFriendList} from "../api/message";
+import {
+    createFriend,
+    deleteFriend,
+    deletePostLike,
+    getPostLikes,
+    getRecommendFriendList,
+    getUserFriendList
+} from "../api/message";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import {getUser} from "../api/storage";
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PeopleIcon from '@material-ui/icons/People';
+import {red} from "@material-ui/core/colors";
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
+import ShareIcon from '@material-ui/icons/Share';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Pagination from "@material-ui/lab/Pagination";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -43,7 +59,11 @@ class Profile extends Component {
         open: false,
         message: "",
         severity: "",
-        value: "recents"
+        value: "favorites",
+        postList: [],
+        preItems: 0,
+        items: 5,
+        page: 1
     };
 
     componentDidMount() {
@@ -53,6 +73,23 @@ class Profile extends Component {
     updateUserProfile(){
         this.getUserFriends();
         this.getRecommendFriends();
+        this.getPostLikeList();
+        window.addEventListener('scroll',this.infiniteScroll,true);
+    }
+
+    getPostLikeList(){
+        getPostLikes()
+            .then(response => {
+                const result = response.status;
+                if(result === 200){
+                    response.json()
+                        .then(posts => {
+                            this.setState({
+                                postList: posts
+                            })
+                        })
+                }
+            })
     }
 
     getRecommendFriends(){
@@ -145,6 +182,32 @@ class Profile extends Component {
         })
     };
 
+    pageChange = (event, newValue) => {
+        this.setState({
+            page: newValue
+        })
+    };
+
+    deletePostLike = (postId) => {
+        deletePostLike(postId);
+        this.componentDidMount();
+    };
+
+    infiniteScroll = () => {
+        let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+
+        let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+
+        let clientHeight = document.documentElement.clientHeight;
+
+        if(scrollTop + clientHeight === scrollHeight) {
+            this.setState({
+                // preItems: this.state.items,
+                items: this.state.items + 5
+            });
+        }
+    };
+
 
     render() {
         const {classes} = this.props;
@@ -158,7 +221,7 @@ class Profile extends Component {
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="md">
                         <div className={classes.root}>
-                            <div>
+                            <div className={classes.header}>
                                 <Grid container spacing={4}>
                                     <Grid item xs={12} md={4}>
                             <Avatar src="/broken-image.jpg" className={classes.large} />
@@ -168,17 +231,67 @@ class Profile extends Component {
                                             {getUser()}
                                         </Typography>
                                         <Typography variant="h6" gutterBottom className={classes.section}>
-                                            게시글 &nbsp; &nbsp; 친구
+                                            게시글 {this.state.postList.length}&nbsp; &nbsp; 친구 {this.state.userFriendList.length}
                                         </Typography>
                                     </Grid>
                                 </Grid>
                             </div>
                             <BottomNavigation value={value} onChange={this.handleChange} className={classes.navigation}>
-                                <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
+                                {/*<BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />*/}
                                 <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
                                 <BottomNavigationAction label="Friends" value="friends" icon={<PeopleIcon />} />
-                                <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+                                {/*<BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />*/}
                             </BottomNavigation>
+                            {this.state.value === 'favorites' ?
+                                // console.log(this.state.postList)
+                                <div>
+                                    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                                        <Container maxWidth="md" className={classes.content}>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12} md={10}>
+                                                    {this.state.postList.slice(this.state.preItems,this.state.items).map((post, index) => (
+                                                        <Card className={classes.section} key={index}>
+                                                            <CardHeader
+                                                                avatar={
+                                                                    <Avatar aria-label="recipe" className={classes.avatar}>
+                                                                        R
+                                                                    </Avatar>
+                                                                }
+                                                                action={
+                                                                    <IconButton aria-label="settings">
+                                                                        <MoreVertIcon/>
+                                                                    </IconButton>
+                                                                }
+                                                                title={post.writer}
+                                                                subheader={post.update_date}
+                                                            />
+
+                                                            <CardContent>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    {post.contents}
+                                                                </Typography>
+                                                            </CardContent>
+                                                            <CardActions disableSpacing>
+                                                                    <IconButton aria-label="add to favorites" onClick={() => this.deletePostLike(post.id)}>
+                                                                        {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                                                        <FavoriteIcon style={{ color: red[500] }}/>
+                                                                    </IconButton>
+
+                                                                <IconButton aria-label="share">
+                                                                    <ShareIcon/>
+                                                                </IconButton>
+                                                            </CardActions>
+                                                        </Card>
+                                                    ))}
+                                                </Grid>
+
+                                            </Grid>
+                                        </Container>
+                                </div>
+                            :
+                                <div></div>
+                            }
+
                             {this.state.value === 'friends' ?                             <Grid container spacing={4}>
                                 <Grid item xs={12} md={6}>
                                     <Typography variant="h5" className={classes.title}>
@@ -186,7 +299,7 @@ class Profile extends Component {
                                     </Typography>
                                     <div className={classes.demo}>
                                         <List>
-                                            {this.state.userFriendList.map( (user,index) => (
+                                            {this.state.userFriendList.slice((this.state.page-1)*10,(this.state.page-1)*10 + 10).map( (user,index) => (
                                                 <ListItem key={index}>
                                                     <ListItemAvatar>
                                                         <Avatar>
@@ -204,6 +317,7 @@ class Profile extends Component {
                                             ))}
                                         </List>
                                     </div>
+                                    <Pagination className={classes.pagination} count={Math.ceil(this.state.userFriendList.length / 10)} onChange={this.pageChange} variant="outlined" color="primary"/>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                     <Typography variant="h5" className={classes.title}>
@@ -211,7 +325,7 @@ class Profile extends Component {
                                     </Typography>
                                     <div className={classes.demo}>
                                         <List>
-                                            {this.state.userList.map( (user,index) => (
+                                            {this.state.userList.slice(0,10).map( (user,index) => (
                                                 <ListItem key={index}>
                                                     <ListItemAvatar>
                                                         <Avatar>
@@ -231,7 +345,8 @@ class Profile extends Component {
                                         </List>
                                     </div>
                                 </Grid>
-                            </Grid> : <div></div>}
+                            </Grid>
+                                : <div></div>}
                         </div>
                     </Container>
                 </ThemeProvider>
@@ -266,6 +381,18 @@ const useStyles = theme => ({
         flexGrow: 1,
         maxWidth: 952,
         marginTop:"10%"
+    },
+    content: {
+        maxWidth : 952,
+        marginLeft: "10%",
+        margin   : 'auto',
+    },
+    pagination: {
+        margin: "5%",
+        marginLeft: "30%"
+    },
+    header: {
+        marginLeft: "15%"
     }
 });
 

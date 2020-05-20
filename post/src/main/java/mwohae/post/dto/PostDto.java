@@ -14,6 +14,7 @@ public class PostDto {
     private int love;
     private String create_date;
     private String update_date;
+    private Boolean like;
 
     public static PostDto create(CreatePostRequest request){
         PostDto postDto = new PostDto();

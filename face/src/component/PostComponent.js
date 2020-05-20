@@ -15,13 +15,23 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
-import {getFollowingPostList, getRecommendFriendList, getUserFriendList} from '../api/message';
+import {
+    createFriend,
+    createPostLike,
+    deletePostLike,
+    getFollowingPostList,
+    getRecommendFriendList,
+    getUserFriendList
+} from '../api/message';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Bar from "./Bar";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Icon from '@material-ui/core/Icon';
 import { green } from '@material-ui/core/colors';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class PostComponent extends Component {
     state = {
@@ -29,7 +39,11 @@ class PostComponent extends Component {
         expanded_id: "",
         postList: [],
         friendList: [],
-        recommendUserList: []
+        recommendUserList: [],
+        items: 5,
+        preItems: 0,
+        heart: false,
+        open: false
     };
 
     handleExpandClick = (index,e) => {
@@ -52,6 +66,7 @@ class PostComponent extends Component {
             });
         this.getUserFriends();
         this.getRecommendFriends()
+        window.addEventListener('scroll',this.infiniteScroll,true);
             // .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처리
     }
 
@@ -83,17 +98,78 @@ class PostComponent extends Component {
             });
     }
 
+    createUserFriend(friend_id){
+        createFriend(friend_id)
+            .then(response => {
+                const result = response.status;
+                if(result === 201){
+                    this.setState({
+                        message: "친구 추가를 완료했습니다.",
+                        severity: "success"
+                    },()=>this.snackbarHandler());
+                    this.getRecommendFriends();
+                } else{
+                    this.setState({
+                        message: "친구 추가를 실패했습니다.",
+                        severity: "error"
+                    },()=>this.snackbarHandler());
+                }
+            })
+    }
+
+    infiniteScroll = () => {
+        let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+
+        let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+
+        let clientHeight = document.documentElement.clientHeight;
+
+        if(scrollTop + clientHeight === scrollHeight) {
+            this.setState({
+                // preItems: this.state.items,
+                items: this.state.items + 5
+            });
+        }
+    };
+
+    createPostLike = (postId) => {
+        createPostLike(postId);
+        this.componentDidMount();
+    };
+
+    deletePostLike = (postId) => {
+        deletePostLike(postId);
+        this.componentDidMount();
+    };
+
+    snackbarHandler = (props) => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
+    snackbar(){
+        return(
+            <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.snackbarHandler}>
+                <Alert onClose={this.snackbarHandler} severity={this.state.severity}>
+                    {this.state.message}
+                </Alert>
+            </Snackbar>
+        );
+    }
+
     render() {
         const {classes} = this.props;
         return (
             <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             <Bar/>
+            {this.snackbar()}
             <MuiThemeProvider>
                 <Container maxWidth="md">
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={8}>
-                    {this.state.postList.map((post, index) => (
+                    {this.state.postList.slice(this.state.preItems,this.state.items).map((post, index) => (
                         <Card className={classes.root} key={index}>
                             <CardHeader
                                 avatar={
@@ -120,9 +196,16 @@ class PostComponent extends Component {
                                 </Typography>
                             </CardContent>
                             <CardActions disableSpacing>
-                                <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon/>
-                                </IconButton>
+                                {post.like ?
+                                    <IconButton aria-label="add to favorites" onClick={() => this.deletePostLike(post.id)}>
+                                        {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                        <FavoriteIcon style={{ color: red[500] }}/>
+                                    </IconButton> :
+                                    <IconButton aria-label="add to favorites" onClick={() => this.createPostLike(post.id)}>
+                                        {/*{post.love === 0 ? <FavoriteBorderIcon/> : <FavoriteIcon/>}*/}
+                                        <FavoriteBorderIcon/>
+                                    </IconButton>}
+
                                 <IconButton aria-label="share">
                                     <ShareIcon/>
                                 </IconButton>
@@ -148,11 +231,12 @@ class PostComponent extends Component {
                     ))}
                         </Grid>
 
+                        {window.innerWidth > 960 ?
                         <Grid item xs={6} md={4}>
                             <div className={classes.sidebar}>
                                 <div className={classes.scroll}>
                             <Card>
-                            {this.state.friendList.map((friend, index) => (
+                            {this.state.friendList.slice(0,10).map((friend, index) => (
                                     <CardHeader
                                         avatar={
                                             <Avatar className={classes.small} src="/broken-image.jpg"/>
@@ -167,13 +251,13 @@ class PostComponent extends Component {
                                 <br/>
                                 <div className={classes.scroll}>
                                 <Card>
-                                    {this.state.recommendUserList.map((friend, index) => (
+                                    {this.state.recommendUserList.slice(0,10).map((friend, index) => (
                                         <CardHeader
                                             avatar={
                                                 <Avatar className={classes.small} src="/broken-image.jpg"/>
                                             }
                                             action={
-                                                <Button className={classes.sideButton}><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
+                                                <Button className={classes.sideButton} onClick={() => this.createUserFriend(friend.friend_id)}><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
                                             }
                                             title={friend.friend_id}
                                             key={index}
@@ -184,6 +268,7 @@ class PostComponent extends Component {
                                 </div>
                             </div>
                         </Grid>
+                            :<div></div> }
                     </Grid>
                 </Container>
             </MuiThemeProvider>
