@@ -16,6 +16,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Container from '@material-ui/core/Container';
 import {
+    createFriend,
     createPostLike,
     deletePostLike,
     getFollowingPostList,
@@ -29,6 +30,8 @@ import Button from "@material-ui/core/Button";
 import Icon from '@material-ui/core/Icon';
 import { green } from '@material-ui/core/colors';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class PostComponent extends Component {
     state = {
@@ -39,7 +42,8 @@ class PostComponent extends Component {
         recommendUserList: [],
         items: 5,
         preItems: 0,
-        heart: false
+        heart: false,
+        open: false
     };
 
     handleExpandClick = (index,e) => {
@@ -94,6 +98,25 @@ class PostComponent extends Component {
             });
     }
 
+    createUserFriend(friend_id){
+        createFriend(friend_id)
+            .then(response => {
+                const result = response.status;
+                if(result === 201){
+                    this.setState({
+                        message: "친구 추가를 완료했습니다.",
+                        severity: "success"
+                    },()=>this.snackbarHandler());
+                    this.getRecommendFriends();
+                } else{
+                    this.setState({
+                        message: "친구 추가를 실패했습니다.",
+                        severity: "error"
+                    },()=>this.snackbarHandler());
+                }
+            })
+    }
+
     infiniteScroll = () => {
         let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
 
@@ -119,12 +142,29 @@ class PostComponent extends Component {
         this.componentDidMount();
     };
 
+    snackbarHandler = (props) => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
+    snackbar(){
+        return(
+            <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.snackbarHandler}>
+                <Alert onClose={this.snackbarHandler} severity={this.state.severity}>
+                    {this.state.message}
+                </Alert>
+            </Snackbar>
+        );
+    }
+
     render() {
         const {classes} = this.props;
         return (
             <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             <Bar/>
+            {this.snackbar()}
             <MuiThemeProvider>
                 <Container maxWidth="md">
                     <Grid container spacing={2}>
@@ -217,7 +257,7 @@ class PostComponent extends Component {
                                                 <Avatar className={classes.small} src="/broken-image.jpg"/>
                                             }
                                             action={
-                                                <Button className={classes.sideButton}><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
+                                                <Button className={classes.sideButton} onClick={() => this.createUserFriend(friend.friend_id)}><Icon style={{ color: green[500] }}>add_circle</Icon></Button>
                                             }
                                             title={friend.friend_id}
                                             key={index}
