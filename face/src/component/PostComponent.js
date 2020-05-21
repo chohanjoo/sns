@@ -32,7 +32,9 @@ import { green } from '@material-ui/core/colors';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import {getToken, logout} from "../api/storage";
 
+var jwtDecode = require('jwt-decode');
 class PostComponent extends Component {
     state = {
         expanded: false,
@@ -46,6 +48,8 @@ class PostComponent extends Component {
         open: false
     };
 
+    server_url = "api";
+
     handleExpandClick = (index,e) => {
         this.setState({
             expanded: !this.state.expanded,
@@ -54,6 +58,7 @@ class PostComponent extends Component {
     };
 
     componentDidMount() {
+        this.checkJwtExp();
         getFollowingPostList()
             .then(res => res.json())
             .then(data => {
@@ -68,6 +73,19 @@ class PostComponent extends Component {
         this.getRecommendFriends()
         window.addEventListener('scroll',this.infiniteScroll,true);
             // .catch(error => this.props.history.push("/user/login")) // TODO token 저장 실패시 오류 처리
+    }
+
+    checkJwtExp(){
+        const date = new Date();
+        try{
+            const lens = date.getTime().toString().length - jwtDecode(getToken())['exp'].toString().length;
+            if(date.getTime()/Math.pow(10,lens) > jwtDecode(getToken())['exp'] ){
+                logout();
+                this.props.history.push("/user/login")
+            }
+        }catch (e) {
+            this.props.history.push("/user/login")
+        }
     }
 
     getUserFriends(){

@@ -45,6 +45,12 @@ export class SignIn extends Component {
         })
     };
 
+    handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            this.login();
+        }
+    };
+
     signInForm() {
         const {classes} = this.props;
 
@@ -83,6 +89,7 @@ export class SignIn extends Component {
                             id="password"
                             autoComplete="current-password"
                             onChange={this.handleChange}
+                            onKeyPress={this.handleKeyPress}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary"/>}

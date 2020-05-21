@@ -24,7 +24,7 @@ import {
 } from "../api/message";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import {getUser} from "../api/storage";
+import {getToken, getUser, logout} from "../api/storage";
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -44,6 +44,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+var jwtDecode = require('jwt-decode');
 class Profile extends Component {
 
     constructor(props){
@@ -67,7 +68,21 @@ class Profile extends Component {
     };
 
     componentDidMount() {
+        this.checkJwtExp();
         this.updateUserProfile();
+    }
+
+    checkJwtExp(){
+        const date = new Date();
+        try{
+            const lens = date.getTime().toString().length - jwtDecode(getToken())['exp'].toString().length;
+            if(date.getTime()/Math.pow(10,lens) > jwtDecode(getToken())['exp'] ){
+                logout();
+                this.props.history.push("/user/login")
+            }
+        }catch (e) {
+            this.props.history.push("/user/login")
+        }
     }
 
     updateUserProfile(){
