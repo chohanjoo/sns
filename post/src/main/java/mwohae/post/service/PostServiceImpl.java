@@ -1,7 +1,6 @@
 package mwohae.post.service;
 
 import mwohae.post.dao.PostDao;
-import mwohae.post.dao.UserDao;
 import mwohae.post.dto.FriendDto;
 import mwohae.post.dto.PostDto;
 import mwohae.post.dto.PostLikeDto;
@@ -30,9 +29,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PostDao postDao;
 
-    @Autowired
-    UserDao userDao;
-
     @Value("${server.url}")
     String server_url;
 
@@ -44,7 +40,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> retrieveFollowingPost(String token, String user_id) {
         RestTemplate restTemplate = new RestTemplate();
-//        List<FriendDto> followingUser = userDao.retrieveUserFriends(user_id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-auth-token", token);

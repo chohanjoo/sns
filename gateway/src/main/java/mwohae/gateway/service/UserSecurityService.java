@@ -1,4 +1,4 @@
-package mwohae.post.service;
+package mwohae.gateway.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;

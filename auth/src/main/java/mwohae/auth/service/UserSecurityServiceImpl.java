@@ -2,8 +2,10 @@ package mwohae.auth.service;
 
 import mwohae.auth.dao.UserDao;
 import mwohae.auth.dto.UserDto;
+import mwohae.auth.request.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,18 +47,36 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     }
 
     @Override
-    public void createUser(UserDto user) {
-        String rawPassword = user.getPassword();
-        String encodedPassword = new BCryptPasswordEncoder().encode(rawPassword);
-
-        user.setPw(encodedPassword);
-        userDao.createUser(user);
-        userDao.createAuthority(user);
-    }
-
-
-    @Override
     public PasswordEncoder passwordEncoder() {
         return this.passwordEncoder;
+    }
+
+    @Override
+    public UserDto retrieveUserById(String user_id) {
+        return this.userDao.retrieveUserById(user_id);
+    }
+
+    @Override
+    public void createUser(CreateUserRequest request) {
+        UserDto userDto = UserDto.create(request);
+
+        userDto.setPw(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setAuthorities(AuthorityUtils.createAuthorityList("USER"));
+
+        userDao.createUserProfile(request.getId());
+        userDao.createUser(userDto);
+        userDao.createAuthority(userDto);
+    }
+
+    @Override
+    public void createAdmin(CreateUserRequest request) {
+        UserDto userDto = UserDto.create(request);
+
+        userDto.setPw(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setAuthorities(AuthorityUtils.createAuthorityList("ADMIN"));
+
+        userDao.createUserProfile(request.getId());
+        userDao.createUser(userDto);
+        userDao.createAuthority(userDto);
     }
 }

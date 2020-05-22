@@ -1,4 +1,4 @@
-package mwohae.post.dao;
+package mwohae.gateway.dao;
 
 public @interface UserRepository {
 }

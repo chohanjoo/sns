@@ -12,18 +12,10 @@ import java.util.Map;
 @UserRepository
 public interface UserDao {
     public List<UserDto> retrieveAllUser();
-    //    public List<UserDto> retrieveRecommendFriends(String user_id);
-    public List<FriendDto> retrieveRecommendFriends
-    (Map<String,Object> map);
+    public List<FriendDto> retrieveRecommendFriends(Map<String,Object> map);
     public UserDto retrieveUserById(String user_id);
-    public void createUser(UserDto userDto);
-    public void createAuthority(UserDto user);
-    public void deleteUser(String user_id);
-    public void deleteAuthority(String user_id);
 
     public ProfileDto retrieveUserProfile(String user_id);
-    public void createUserProfile(String user_id);
-
     public List<GrantedAuthority> retrieveAuthority(String user_id);
 
     public List<FriendDto> retrieveUserFriends(String user_id);

@@ -1,7 +1,7 @@
-package mwohae.post.service;
+package mwohae.gateway.service;
 
-import mwohae.post.dao.UserDao;
-import mwohae.post.dto.UserDto;
+import mwohae.gateway.dao.UserDao;
+import mwohae.gateway.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -10,7 +10,7 @@ import mwohae.auth.request.CreateUserRequest;
 import mwohae.auth.response.CommonResult;
 import mwohae.auth.response.SingleResult;
 import mwohae.auth.service.ResponseService;
-import mwohae.auth.service.UserService;
+import mwohae.auth.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/auth")
 public class AuthController {
     @Autowired
-    private UserService userService;
+    private UserSecurityService userService;
     private final JwtTokenProvider jwtTokenProvider;
     private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;

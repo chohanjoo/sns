@@ -6,8 +6,4 @@
         select * from profile where user_id = #{user_id}
     </select>
 
-    <insert id="createUserProfile" parameterType="java.lang.String">
-        insert into profile (user_id) values (#{user_id})
-    </insert>
-
 </mapper>

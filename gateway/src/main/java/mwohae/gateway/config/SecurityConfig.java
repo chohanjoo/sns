@@ -1,6 +1,8 @@
-package mwohae.gateway;
+package mwohae.gateway.config;
 
 
+import mwohae.gateway.filter.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +19,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -24,7 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/api/*/signin", "/api/*/signup").permitAll() // 가입 및 인증 주소는 누구나 접근가능
+                .antMatchers("/api/generator/**").hasAuthority("ADMIN")
+                .antMatchers("/api/user/**").hasAuthority("USER")
+                .antMatchers("/api/post/**").hasAuthority("USER")
+                .anyRequest().authenticated()
+                .and()
+                .addFilterAfter(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다
     }
 
     @Bean
